@@ -165,7 +165,6 @@
   body[data-theme="dark"] .quality-btn { background: #333; border: 1px solid #555; color: #ccc; }
   body[data-theme="dark"] .quality-btn.active { color: #7C4DFF; border-color: #7C4DFF; }
   body[data-theme="dark"] #modeToggle { background-color: #333; color: #fff; }
-
 </style>
 </head>
 <body>
@@ -204,8 +203,6 @@
 
 <script>
 const SPOTIFY_API="https://spotify-api-6yog.vercel.app/api/scrape";
-const SAAVN_API="https://jiosavan-api-with-playlist.vercel.app/api/search/songs";
-
 const tracksDiv=document.getElementById("tracks");
 const loader=document.getElementById("loader");
 const player=document.getElementById("player");
@@ -214,8 +211,10 @@ const downloadAllBtn=document.getElementById("downloadAll");
 const sheet=document.getElementById("sheet");
 const fab=document.getElementById("fab");
 const modeToggle=document.getElementById("modeToggle");
+const trackCount=document.getElementById("trackCount");
 
-let quality="320kbps", saavnCache={}, currentKey=null,currentBtn=null,currentCard=null;
+let quality="320kbps";
+let currentTracks=[];
 
 // === Dark Mode Toggle ===
 let theme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark":"light");
@@ -239,6 +238,85 @@ document.querySelectorAll(".quality-btn").forEach(b=>{
 
 // === FAB open sheet ===
 fab.onclick = ()=>sheet.classList.add("open");
+
+// === Load Playlist ===
+document.getElementById("loadBtn").onclick = async () => {
+  const url = document.getElementById("playlistUrl").value.trim();
+  if(!url){ alert("Enter a Spotify playlist URL"); return; }
+
+  loader.style.display="block";
+  tracksDiv.innerHTML="";
+  trackCount.textContent="Loading playlist...";
+  try{
+    const res = await fetch(`${SPOTIFY_API}?url=${encodeURIComponent(url)}`);
+    const data = await res.json();
+
+    if(!data.tracks || data.tracks.length===0){
+      trackCount.textContent="No tracks found!";
+      loader.style.display="none";
+      return;
+    }
+
+    currentTracks = data.tracks;
+    trackCount.textContent=`${currentTracks.length} tracks loaded`;
+    displayTracks(currentTracks);
+  }catch(e){
+    console.error(e);
+    alert("Failed to load playlist. Make sure the URL is correct.");
+    trackCount.textContent="No playlist loaded";
+  }finally{
+    loader.style.display="none";
+    sheet.classList.remove("open");
+  }
+}
+
+// === Display Tracks ===
+function displayTracks(tracks){
+  tracksDiv.innerHTML="";
+  tracks.forEach((t,i)=>{
+    const card = document.createElement("div");
+    card.className="card";
+
+    card.innerHTML=`
+      <img src="${t.image || ''}" alt="cover">
+      <div class="card-info">
+        <div class="title">${t.title}</div>
+        <div class="meta">${t.artist}</div>
+      </div>
+      <div class="actions">
+        <span onclick="playTrack(${i})">▶</span>
+        <span onclick="downloadTrack(${i})">⬇</span>
+      </div>
+    `;
+    tracksDiv.appendChild(card);
+  });
+}
+
+// === Play / Download Track ===
+function playTrack(index){
+  const t = currentTracks[index];
+  if(!t.url){ alert("No playable URL available"); return; }
+  player.src=t.url;
+  player.play();
+}
+
+function downloadTrack(index){
+  const t = currentTracks[index];
+  if(!t.url){ alert("No downloadable URL"); return; }
+  const a = document.createElement("a");
+  a.href=t.url;
+  a.download=`${t.title}.mp3`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+// === Search Filter ===
+searchInput.oninput = ()=>{
+  const q = searchInput.value.toLowerCase();
+  const filtered = currentTracks.filter(t=>t.title.toLowerCase().includes(q));
+  displayTracks(filtered);
+}
 </script>
 </body>
 </html>
