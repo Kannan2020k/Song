@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
-  /* ===== Base Styles ===== */
   body {
     font-family: 'Varela Round', system-ui;
     margin: 0;
@@ -15,69 +14,18 @@
     color: #333;
     transition: background-color 0.3s, color 0.3s;
   }
-  .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px 20px 180px;
-  }
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+  .container { max-width: 900px; margin: auto; padding: 20px 20px 180px; }
+  .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
   .header-title { font-size: 2rem; font-weight: bold; color: #7C4DFF; }
   .header-sub { font-size: .9rem; color: #555; margin-top: 5px; }
-  .search {
-    width: 100%;
-    padding: 10px;
-    margin: 15px 0;
-    border-radius: 25px;
-    border: 1px solid #ccc;
-    background: #f0f0f0;
-    font-size: 1rem;
-    color: #333;
-  }
+  .search { width: 100%; padding: 10px; margin: 15px 0; border-radius: 25px; border: 1px solid #ccc; background: #f0f0f0; font-size: 1rem; color: #333; }
 
-  /* ===== Quality Buttons Container ===== */
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-  }
-  .quality-btns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .quality-btn {
-    background: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 6px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .quality-btn.active {
-    border-color: #7C4DFF;
-    color: #7C4DFF;
-  }
+  .controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+  .quality-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .quality-btn { background: #f0f0f0; border: 1px solid #ccc; padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; }
+  .quality-btn.active { border-color: #7C4DFF; color: #7C4DFF; }
 
-  /* ===== Cards ===== */
-  .card {
-    display: flex;
-    gap: 12px;
-    padding: 12px;
-    background: #f9f9f9;
-    border-radius: 14px;
-    margin-bottom: 12px;
-    align-items: center;
-    transition: .3s;
-    cursor: pointer;
-  }
+  .card { display: flex; gap: 12px; padding: 12px; background: #f9f9f9; border-radius: 14px; margin-bottom: 12px; align-items: center; transition: .3s; cursor: pointer; }
   .card:hover { background: #ececec; }
   .card img { width: 60px; height: 60px; border-radius: 12px; object-fit: cover; }
   .card-info { flex: 1; overflow: hidden; }
@@ -86,75 +34,22 @@
   .actions { display: flex; gap: 10px; }
   .actions span { cursor: pointer; color: #7C4DFF; }
 
-  /* ===== Floating Buttons ===== */
-  .fab, .download-all {
-    position: fixed;
-    right: 20px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(45deg,#7C4DFF,#9a6bff);
-    border: none;
-    color: #fff;
-    font-size: 28px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 1000;
-  }
+  .fab, .download-all { position: fixed; right: 20px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(45deg,#7C4DFF,#9a6bff); border: none; color: #fff; font-size: 28px; cursor: pointer; transition: all 0.3s ease; z-index: 1000; }
   .fab { bottom: 20px; }
   .download-all { bottom: 90px; display: none; }
 
-  /* ===== Dark Mode Button ===== */
-  #modeToggle {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background-color: #fff;
-    font-size: 28px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-  }
+  #modeToggle { width: 56px; height: 56px; border-radius: 50%; background-color: #fff; font-size: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
 
-  /* ===== Sheet ===== */
-  .sheet {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #f0f0f0;
-    padding: 25px;
-    transform: translateY(100%);
-    transition: .3s;
-    border-radius: 20px 20px 0 0;
-  }
+  .sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: #f0f0f0; padding: 25px; transform: translateY(100%); transition: .3s; border-radius: 20px 20px 0 0; }
   .sheet.open { transform: translateY(0); }
   .sheet input, .sheet button { width: 100%; padding: 12px; border-radius: 25px; border: none; margin-bottom: 10px; }
 
-  /* ===== Audio Player ===== */
   audio { display: none; }
 
-  /* ===== Loader ===== */
-  .loader {
-    display: none;
-    margin: 20px auto;
-    width: 40px;
-    height: 40px;
-    border: 4px solid #ccc;
-    border-top: 4px solid #7C4DFF;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
+  .loader { display: none; margin: 20px auto; width: 40px; height: 40px; border: 4px solid #ccc; border-top: 4px solid #7C4DFF; border-radius: 50%; animation: spin 1s linear infinite; }
   @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
 
-  /* ===== Dark Mode Styles ===== */
-  body[data-theme="dark"] {
-    background-color: #121212;
-    color: #ccc;
-  }
+  body[data-theme="dark"] { background-color: #121212; color: #ccc; }
   body[data-theme="dark"] .container { background: #121212; }
   body[data-theme="dark"] .header-title { color: #fff; }
   body[data-theme="dark"] .header-sub { color: #aaa; }
@@ -175,7 +70,6 @@
       <div class="header-title">Playlist Downloader</div>
       <div class="header-sub" id="trackCount">No playlist loaded</div>
     </div>
-    <!-- Controls Container: Quality buttons + Dark Mode -->
     <div class="controls">
       <div class="quality-btns">
         <button class="quality-btn active" data-q="320kbps">320</button>
@@ -207,7 +101,6 @@ const tracksDiv=document.getElementById("tracks");
 const loader=document.getElementById("loader");
 const player=document.getElementById("player");
 const searchInput=document.getElementById("search");
-const downloadAllBtn=document.getElementById("downloadAll");
 const sheet=document.getElementById("sheet");
 const fab=document.getElementById("fab");
 const modeToggle=document.getElementById("modeToggle");
@@ -216,7 +109,7 @@ const trackCount=document.getElementById("trackCount");
 let quality="320kbps";
 let currentTracks=[];
 
-// === Dark Mode Toggle ===
+// Dark mode
 let theme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark":"light");
 document.body.setAttribute("data-theme", theme);
 modeToggle.textContent = theme==="dark"?"🌞":"🌙";
@@ -227,7 +120,7 @@ modeToggle.onclick = ()=>{
   modeToggle.textContent = theme==="dark"?"🌞":"🌙";
 }
 
-// === Quality Buttons ===
+// Quality buttons
 document.querySelectorAll(".quality-btn").forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll(".quality-btn").forEach(x=>x.classList.remove("active"));
@@ -236,10 +129,10 @@ document.querySelectorAll(".quality-btn").forEach(b=>{
   };
 });
 
-// === FAB open sheet ===
+// FAB open sheet
 fab.onclick = ()=>sheet.classList.add("open");
 
-// === Load Playlist ===
+// Load Playlist
 document.getElementById("loadBtn").onclick = async () => {
   const url = document.getElementById("playlistUrl").value.trim();
   if(!url){ alert("Enter a Spotify playlist URL"); return; }
@@ -251,13 +144,20 @@ document.getElementById("loadBtn").onclick = async () => {
     const res = await fetch(`${SPOTIFY_API}?url=${encodeURIComponent(url)}`);
     const data = await res.json();
 
-    if(!data.tracks || data.tracks.length===0){
+    if(!data || !data.tracks || data.tracks.length===0){
       trackCount.textContent="No tracks found!";
       loader.style.display="none";
       return;
     }
 
-    currentTracks = data.tracks;
+    // Normalize track data
+    currentTracks = data.tracks.map(t=>({
+      title: t.title || t.name || "Unknown",
+      artist: t.artist || t.artists?.join(", ") || "Unknown",
+      image: t.image || t.thumbnail || "",
+      url: t.url || t.link || ""
+    }));
+
     trackCount.textContent=`${currentTracks.length} tracks loaded`;
     displayTracks(currentTracks);
   }catch(e){
@@ -270,15 +170,19 @@ document.getElementById("loadBtn").onclick = async () => {
   }
 }
 
-// === Display Tracks ===
+// Display tracks
 function displayTracks(tracks){
   tracksDiv.innerHTML="";
+  if(tracks.length===0){
+    tracksDiv.innerHTML="<p>No tracks to display.</p>";
+    return;
+  }
+
   tracks.forEach((t,i)=>{
     const card = document.createElement("div");
     card.className="card";
-
     card.innerHTML=`
-      <img src="${t.image || ''}" alt="cover">
+      <img src="${t.image}" alt="cover">
       <div class="card-info">
         <div class="title">${t.title}</div>
         <div class="meta">${t.artist}</div>
@@ -292,7 +196,7 @@ function displayTracks(tracks){
   });
 }
 
-// === Play / Download Track ===
+// Play / Download
 function playTrack(index){
   const t = currentTracks[index];
   if(!t.url){ alert("No playable URL available"); return; }
@@ -311,7 +215,7 @@ function downloadTrack(index){
   a.remove();
 }
 
-// === Search Filter ===
+// Search
 searchInput.oninput = ()=>{
   const q = searchInput.value.toLowerCase();
   const filtered = currentTracks.filter(t=>t.title.toLowerCase().includes(q));
