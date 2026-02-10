@@ -6,176 +6,232 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#121212;
-  --text:#fff;
-  --card-bg:#242424;
-  --card-hover:#2b2b2b;
-  --meta:#aaa;
-  --accent:#7C4DFF;
+:root {
+  --bg:#121212; --text:#fff; --card-bg:#242424; --card-hover:#2b2b2b;
+  --playing-outline:#7C4DFF; --meta:#aaa; --actions:#7C4DFF;
+  --quality-bg:#222; --quality-border:#444; --quality-text:#bbb;
+  --quality-active:#7C4DFF;
+  --fab-gradient-start:#7C4DFF; --fab-gradient-end:#9a6bff;
 }
 
 body[data-theme="light"]{
-  --bg:#fdfdfd;
-  --text:#222;
-  --card-bg:#fff;
-  --card-hover:#f0f0f0;
-  --meta:#555;
-  --accent:#6200ea;
+  --bg:#fdfdfd; --text:#222; --card-bg:#fff; --card-hover:#eee;
+  --playing-outline:#6200ea; --meta:#555; --actions:#6200ea;
+  --quality-bg:#eee; --quality-border:#ccc; --quality-text:#555;
+  --quality-active:#6200ea;
+  --fab-gradient-start:#6200ea; --fab-gradient-end:#9c27b0;
 }
 
 body{
-  margin:0;
-  font-family:'Varela Round',system-ui;
-  background:var(--bg);
-  color:var(--text);
-  transition: background .4s ease, color .4s ease;
+  margin:0; font-family:'Varela Round',system-ui;
+  background:var(--bg); color:var(--text); transition:.3s;
 }
 
-.container{max-width:900px;margin:auto;padding:20px}
+.container{max-width:900px;margin:auto;padding:20px 20px 180px;}
 
-/* ===== Header ===== */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
+.header-title{font-size:2rem;color:var(--playing-outline);font-weight:bold;}
+.header-sub{font-size:.9rem;color:var(--meta);}
+
+/* ===== Floating Top Controls ===== */
+.top-controls{
+  position:fixed;top:20px;right:20px;
+  display:flex;gap:12px;z-index:999;
 }
 
-.header-title{
-  font-size:2rem;
-  font-weight:bold;
-  color:var(--accent);
-}
-
-.header-sub{
-  font-size:.9rem;
-  color:var(--meta);
-}
-
-/* ===== Controls ===== */
-.header-controls{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-
-.quality-group{
-  display:flex;
-  gap:8px;
+/* Quality Buttons */
+.quality-switch{
+  display:flex;gap:8px;
+  background:var(--card-bg);
+  padding:6px 10px;border-radius:30px;
+  box-shadow:0 4px 8px rgba(0,0,0,.3);
 }
 
 .quality-btn{
-  background:var(--card-bg);
-  border:1px solid #444;
-  color:var(--text);
-  padding:6px 14px;
-  border-radius:20px;
+  background:var(--quality-bg);
+  border:1px solid var(--quality-border);
+  color:var(--quality-text);
+  padding:6px 14px;border-radius:20px;
   cursor:pointer;
-  transition:.25s;
 }
-
-.quality-btn:hover{
-  background:var(--card-hover);
-}
-
 .quality-btn.active{
-  border-color:var(--accent);
-  color:var(--accent);
+  border-color:var(--quality-active);
+  color:var(--quality-active);
 }
 
-/* ===== MODE TOGGLE (UPGRADED) ===== */
-#modeToggle{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  border:#dark;
-  cursor:pointer;
-  background:var(#black);
-  color:var(#black);
+/* ===== Animated Mode Toggle ===== */
+.mode-toggle{
+  width:52px;height:52px;border-radius:50%;
+  border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--fab-gradient-start),var(--fab-gradient-end));
+  box-shadow:0 6px 14px rgba(0,0,0,.35);
+  position:relative;overflow:hidden;
+  transition:.4s;
+}
+.mode-toggle:hover{transform:rotate(15deg) scale(1.1);}
+
+.mode-toggle span{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
   font-size:22px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  transition:
-    background .3s ease,
-    box-shadow .3s ease,
-    transform .4s ease;
+  transition:.6s;
 }
 
-#modeToggle:hover{
-  box-shadow:0 0 12px var(#dark);
-  transform:scale(1.08);
+body[data-theme="light"] .moon{opacity:0;transform:rotate(-180deg) scale(0);}
+body[data-theme="dark"] .sun{opacity:0;transform:rotate(180deg) scale(0);}
+
+/* ===== Search ===== */
+.search{
+  width:100%;padding:10px;margin:15px 0;
+  border-radius:25px;border:1px solid #333;
+  background:#1e1e1e;color:#fff;
 }
 
-#modeToggle.animate{
-  transform:rotate(360deg) scale(1.15);
+/* ===== Cards ===== */
+.card{
+  display:flex;gap:12px;padding:12px;
+  background:var(--card-bg);
+  border-radius:14px;margin-bottom:12px;
+  align-items:center;cursor:pointer;transition:.3s;
 }
+.card:hover{background:var(--card-hover);}
+.card.playing{outline:2px solid var(--playing-outline);}
+.card img{width:60px;height:60px;border-radius:12px;}
+.card-info{flex:1;overflow:hidden;}
+.title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:bold;}
+.meta{font-size:.8rem;color:var(--meta);}
+.actions{display:flex;gap:10px;}
+.actions span{cursor:pointer;color:var(--actions);}
 
+/* FAB */
+.fab,.download-all{
+  position:fixed;right:20px;width:56px;height:56px;
+  border-radius:50%;border:none;color:#fff;
+  font-size:28px;cursor:pointer;
+  background:linear-gradient(45deg,var(--fab-gradient-start),var(--fab-gradient-end));
+}
+.fab{bottom:20px;}
+.download-all{bottom:90px;display:none;}
+
+/* Sheet */
+.sheet{
+  position:fixed;bottom:0;left:0;width:100%;
+  background:var(--card-bg);padding:25px;
+  transform:translateY(100%);transition:.3s;
+  border-radius:20px 20px 0 0;
+}
+.sheet.open{transform:translateY(0);}
+.sheet input,.sheet button{
+  width:100%;padding:12px;border-radius:25px;
+  border:none;margin-bottom:10px;
+  background:var(--card-bg);color:var(--text);
+}
 </style>
 </head>
 
-<body>
+<body data-theme="light">
 
 <div class="container">
-  <div class="header">
-    <div>
-      <div class="header-title">Playlist Downloader</div>
-      <div class="header-sub" id="trackCount">No playlist loaded</div>
-    </div>
+  <div class="header-title">Playlist Downloader</div>
+  <div class="header-sub" id="trackCount">No playlist loaded</div>
 
-    <div class="header-controls">
-      <div class="quality-group">
-        <button class="quality-btn active" data-q="320kbps">320</button>
-        <button class="quality-btn" data-q="160kbps">160</button>
-        <button class="quality-btn" data-q="96kbps">96</button>
-      </div>
-
-      <button id="modeToggle" aria-label="Toggle theme">🌙</button>
-    </div>
-  </div>
+  <input class="search" id="search" placeholder="Search by song title">
+  <div id="tracks"></div>
 </div>
 
+<!-- Floating Controls -->
+<div class="top-controls">
+  <div class="quality-switch">
+    <button class="quality-btn active" data-q="320kbps">320</button>
+    <button class="quality-btn" data-q="160kbps">160</button>
+    <button class="quality-btn" data-q="96kbps">96</button>
+  </div>
+  <button id="modeToggle" class="mode-toggle">
+    <span class="sun">☀️</span>
+    <span class="moon">🌙</span>
+  </button>
+</div>
+
+<button class="download-all" id="downloadAll">⬇</button>
+<button class="fab" id="fab">+</button>
+
+<div class="sheet" id="sheet">
+  <input id="playlistUrl" placeholder="Spotify playlist URL">
+  <button id="loadBtn">Load Playlist</button>
+</div>
+
+<audio id="player"></audio>
+
 <script>
-/* ===== THEME TOGGLE ===== */
-const modeToggle = document.getElementById("modeToggle");
-const savedTheme = localStorage.getItem("theme") || "dark";
+const SPOTIFY_API="https://spotify-api-6yog.vercel.app/api/scrape";
+const SAAVN_API="https://jiosavan-api-with-playlist.vercel.app/api/search/songs";
 
-document.body.setAttribute("data-theme", savedTheme);
-modeToggle.textContent = savedTheme === "dark" ? "🌞" : "🌙";
+const tracksDiv=document.getElementById("tracks");
+const player=document.getElementById("player");
+let quality="320kbps", saavnCache={}, currentKey=null;
 
-modeToggle.addEventListener("click", () => {
-  const current = document.body.getAttribute("data-theme");
-  const next = current === "dark" ? "light" : "dark";
-
-  document.body.setAttribute("data-theme", next);
-  localStorage.setItem("theme", next);
-
-  modeToggle.textContent = next === "dark" ? "🌞" : "🌙";
-
-  // trigger animation
-  modeToggle.classList.add("animate");
-  setTimeout(() => modeToggle.classList.remove("animate"), 500);
-});
-
-/* ===== QUALITY SELECTOR ===== */
-let quality = "320kbps";
-
-document.querySelectorAll(".quality-btn").forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll(".quality-btn")
-      .forEach(b => b.classList.remove("active"));
-
-    btn.classList.add("active");
-    quality = btn.dataset.q;
-    console.log("Selected quality:", quality);
+/* Quality */
+document.querySelectorAll(".quality-btn").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll(".quality-btn").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    quality=b.dataset.q;
   };
 });
-</script>
 
+/* Dark Mode */
+const modeBtn=document.getElementById("modeToggle");
+modeBtn.onclick=()=>{
+  const t=document.body.getAttribute("data-theme")==="dark"?"light":"dark";
+  document.body.setAttribute("data-theme",t);
+  localStorage.setItem("theme",t);
+  modeBtn.animate([{transform:"scale(1)"},{transform:"scale(.85)"},{transform:"scale(1)"}],{duration:300});
+};
+
+/* FAB */
+fab.onclick=()=>sheet.classList.add("open");
+
+/* Playlist */
+loadBtn.onclick=async()=>{
+  const id=playlistUrl.value.split("playlist/")[1]?.split("?")[0];
+  if(!id)return alert("Invalid URL");
+  sheet.classList.remove("open");
+
+  const res=await fetch(`${SPOTIFY_API}?playlist=${id}`);
+  const j=await res.json();
+  tracksDiv.innerHTML="";
+  trackCount.textContent=j.tracks.length+" tracks";
+
+  for(const t of j.tracks){
+    const key=`${t.title} ${t.artists}`;
+    const r=await fetch(`${SAAVN_API}?query=${encodeURIComponent(key)}&limit=1`);
+    const s=await r.json();
+    saavnCache[key]=s.data?.results?.[0]?.downloadUrl||[];
+
+    const c=document.createElement("div");
+    c.className="card";
+    c.innerHTML=`
+      <img src="${t.image}">
+      <div class="card-info">
+        <div class="title">${t.title}</div>
+        <div class="meta">${t.artists}</div>
+      </div>
+      <div class="actions">
+        <span class="material-icons play">play_arrow</span>
+        <span class="material-icons down">download</span>
+      </div>`;
+    tracksDiv.appendChild(c);
+
+    c.querySelector(".play").onclick=()=>{
+      const u=saavnCache[key].find(x=>x.quality===quality)||saavnCache[key][0];
+      if(!u)return;
+      player.src=u.url; player.play();
+    };
+  }
+  downloadAll.style.display="block";
+};
+</script>
 </body>
 </html>
