@@ -4,154 +4,81 @@
 <meta charset="UTF-8">
 <title>Playlist Downloader</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 <style>
 :root {
-  --bg:#121212; --text:#fff; --card-bg:#242424; --card-hover:#2b2b2b;
-  --playing-outline:#7C4DFF; --meta:#aaa; --actions:#7C4DFF;
-  --quality-bg:#222; --quality-border:#444; --quality-text:#bbb;
-  --quality-active:#7C4DFF;
-  --fab-gradient-start:#7C4DFF; --fab-gradient-end:#9a6bff;
+  --bg: #121212; --text: #fff; --card-bg: #242424; --card-hover: #2b2b2b;
+  --playing-outline: #7C4DFF; --meta: #aaa; --actions: #7C4DFF;
+  --quality-bg: #222; --quality-border: #444; --quality-text: #bbb; --quality-active: #7C4DFF;
+  --fab-gradient-start: #7C4DFF; --fab-gradient-end: #9a6bff;
+  --skeleton-bg: #1e1e1e; --skeleton-line: #333; --bar-bg: #333; --bar-fill: linear-gradient(90deg,#7C4DFF,#9a6bff);
 }
-
-body[data-theme="light"]{
-  --bg:#fdfdfd; --text:#222; --card-bg:#fff; --card-hover:#eee;
-  --playing-outline:#6200ea; --meta:#555; --actions:#6200ea;
-  --quality-bg:#eee; --quality-border:#ccc; --quality-text:#555;
-  --quality-active:#6200ea;
-  --fab-gradient-start:#6200ea; --fab-gradient-end:#9c27b0;
+body[data-theme="light"] {
+  --bg:#fdfdfd;--text:#222;--card-bg:#fff;--card-hover:#f0f0f0;--playing-outline:#6200ea;
+  --meta:#555;--actions:#6200ea;--quality-bg:#eee;--quality-border:#ccc;--quality-text:#555;--quality-active:#6200ea;
+  --fab-gradient-start:#6200ea;--fab-gradient-end:#9c27b0;--skeleton-bg:#e0e0e0;--skeleton-line:#ccc;--bar-bg:#ccc;
+  --bar-fill:linear-gradient(90deg,#6200ea,#9c27b0);
 }
-
-body{
-  margin:0; font-family:'Varela Round',system-ui;
-  background:var(--bg); color:var(--text); transition:.3s;
-}
-
-.container{max-width:900px;margin:auto;padding:20px 20px 180px;}
-
-.header-title{font-size:2rem;color:var(--playing-outline);font-weight:bold;}
-.header-sub{font-size:.9rem;color:var(--meta);}
-
-/* ===== Floating Top Controls ===== */
-.top-controls{
-  position:fixed;top:20px;right:20px;
-  display:flex;gap:12px;z-index:999;
-}
-
-/* Quality Buttons */
-.quality-switch{
-  display:flex;gap:8px;
-  background:var(--card-bg);
-  padding:6px 10px;border-radius:30px;
-  box-shadow:0 4px 8px rgba(0,0,0,.3);
-}
-
-.quality-btn{
-  background:var(--quality-bg);
-  border:1px solid var(--quality-border);
-  color:var(--quality-text);
-  padding:6px 14px;border-radius:20px;
-  cursor:pointer;
-}
-.quality-btn.active{
-  border-color:var(--quality-active);
-  color:var(--quality-active);
-}
-
-/* ===== Animated Mode Toggle ===== */
-.mode-toggle{
-  width:52px;height:52px;border-radius:50%;
-  border:none;cursor:pointer;
-  background:linear-gradient(135deg,var(--fab-gradient-start),var(--fab-gradient-end));
-  box-shadow:0 6px 14px rgba(0,0,0,.35);
-  position:relative;overflow:hidden;
-  transition:.4s;
-}
-.mode-toggle:hover{transform:rotate(15deg) scale(1.1);}
-
-.mode-toggle span{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;
-  transition:.6s;
-}
-
-body[data-theme="light"] .moon{opacity:0;transform:rotate(-180deg) scale(0);}
-body[data-theme="dark"] .sun{opacity:0;transform:rotate(180deg) scale(0);}
-
-/* ===== Search ===== */
-.search{
-  width:100%;padding:10px;margin:15px 0;
-  border-radius:25px;border:1px solid #333;
-  background:#1e1e1e;color:#fff;
-}
-
-/* ===== Cards ===== */
-.card{
-  display:flex;gap:12px;padding:12px;
-  background:var(--card-bg);
-  border-radius:14px;margin-bottom:12px;
-  align-items:center;cursor:pointer;transition:.3s;
-}
-.card:hover{background:var(--card-hover);}
-.card.playing{outline:2px solid var(--playing-outline);}
-.card img{width:60px;height:60px;border-radius:12px;}
-.card-info{flex:1;overflow:hidden;}
-.title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:bold;}
-.meta{font-size:.8rem;color:var(--meta);}
-.actions{display:flex;gap:10px;}
-.actions span{cursor:pointer;color:var(--actions);}
-
-/* FAB */
-.fab,.download-all{
-  position:fixed;right:20px;width:56px;height:56px;
-  border-radius:50%;border:none;color:#fff;
-  font-size:28px;cursor:pointer;
-  background:linear-gradient(45deg,var(--fab-gradient-start),var(--fab-gradient-end));
-}
+body {margin:0;font-family:'Varela Round',system-ui;background:var(--bg);color:var(--text);transition:all 0.3s ease;}
+.container {max-width:900px;margin:auto;padding:20px 20px 180px;}
+.header {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;position:relative;}
+.header-title {font-size:2rem;color:var(--playing-outline);font-weight:bold;}
+.header-sub {font-size:.9rem;color:var(--meta);margin-top:5px;}
+.header-right {display:flex;align-items:center;gap:10px;}
+.quality-btn {background: var(--quality-bg); border:1px solid var(--quality-border); color:var(--quality-text); padding:6px 14px; border-radius:20px; cursor:pointer; transition:0.3s;}
+.quality-btn.active {border-color: var(--quality-active); color:var(--quality-active);}
+#modeToggle {width:40px;height:40px;border:none;border-radius:50%;font-size:20px;cursor:pointer;background:var(--card-bg);color:var(--text);display:flex;justify-content:center;align-items:center;box-shadow:0 4px 6px rgba(0,0,0,0.2);transition:0.3s;}
+#modeToggle:hover {background: var(--card-hover);transform:scale(1.1);}
+.search {width:100%;padding:10px;margin:15px 0;border-radius:25px;border:1px solid #333;background:#1e1e1e;color:var(--text);font-size:1rem;}
+.loader {display:none;margin:20px auto;width:40px;height:40px;border:4px solid #333;border-top:4px solid var(--playing-outline);border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.card {display:flex;gap:12px;padding:12px;background:var(--card-bg);border-radius:14px;margin-bottom:12px;align-items:center;transition:.3s;cursor:pointer;}
+.card:hover {background: var(--card-hover);}
+.card.playing {outline:2px solid var(--playing-outline);}
+.card img {width:60px;height:60px;border-radius:12px;object-fit:cover;}
+.card-info {flex:1;overflow:hidden;}
+.title {white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:bold;}
+.meta {font-size:.8rem;color:var(--meta);}
+.actions {display:flex;gap:10px;}
+.actions span {cursor:pointer;color:var(--actions);transition:color 0.3s;}
+.fab,.download-all {position:fixed;right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(45deg,var(--fab-gradient-start),var(--fab-gradient-end));border:none;color:#fff;font-size:28px;cursor:pointer;transition:0.3s;}
 .fab{bottom:20px;}
 .download-all{bottom:90px;display:none;}
-
-/* Sheet */
-.sheet{
-  position:fixed;bottom:0;left:0;width:100%;
-  background:var(--card-bg);padding:25px;
-  transform:translateY(100%);transition:.3s;
-  border-radius:20px 20px 0 0;
-}
+.sheet{position:fixed;bottom:0;left:0;width:100%;background:var(--card-bg);padding:25px;transform:translateY(100%);transition:.3s;border-radius:20px 20px 0 0;}
 .sheet.open{transform:translateY(0);}
-.sheet input,.sheet button{
-  width:100%;padding:12px;border-radius:25px;
-  border:none;margin-bottom:10px;
-  background:var(--card-bg);color:var(--text);
-}
+.sheet input,.sheet button{width:100%;padding:12px;border-radius:25px;border:none;margin-bottom:10px;background:var(--card-bg);color:var(--text);}
+.progress{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;}
+.progress.show{display:flex;}
+.box{background:var(--card-bg);padding:20px;border-radius:20px;width:300px;text-align:center;color:var(--text);}
+.bar{height:10px;background:var(--bar-bg);border-radius:6px;overflow:hidden;}
+.bar div{height:100%;width:0;background:var(--bar-fill);}
+.skeleton{display:flex;gap:12px;padding:12px;background:var(--skeleton-bg);border-radius:14px;margin-bottom:12px;align-items:center;animation:shimmer 1.2s infinite linear;}
+.skeleton .img{width:60px;height:60px;border-radius:12px;background:var(--skeleton-line);}
+.skeleton .info{flex:1;display:flex;flex-direction:column;gap:8px;}
+.skeleton .line{height:14px;border-radius:6px;width:80%;background:var(--skeleton-line);}
+.skeleton .line.short{width:50%;}
+@keyframes shimmer{0%{background-position:-200px 0}100%{background-position:200px 0}}
+.title mark{background: #ffeb3b;color:#000;padding:0 2px;border-radius:2px;}
 </style>
 </head>
-
-<body data-theme="light">
-
+<body>
 <div class="container">
-  <div class="header-title">Playlist Downloader</div>
-  <div class="header-sub" id="trackCount">No playlist loaded</div>
-
-  <input class="search" id="search" placeholder="Search by song title">
-  <div id="tracks"></div>
-</div>
-
-<!-- Floating Controls -->
-<div class="top-controls">
-  <div class="quality-switch">
-    <button class="quality-btn active" data-q="320kbps">320</button>
-    <button class="quality-btn" data-q="160kbps">160</button>
-    <button class="quality-btn" data-q="96kbps">96</button>
+  <div class="header">
+    <div>
+      <div class="header-title">Playlist Downloader</div>
+      <div class="header-sub" id="trackCount">No playlist loaded</div>
+    </div>
+    <div class="header-right">
+      <button class="quality-btn active" data-q="320kbps">320</button>
+      <button class="quality-btn" data-q="160kbps">160</button>
+      <button class="quality-btn" data-q="96kbps">96</button>
+      <button id="modeToggle">🌙</button>
+    </div>
   </div>
-  <button id="modeToggle" class="mode-toggle">
-    <span class="sun">☀️</span>
-    <span class="moon">🌙</span>
-  </button>
+  <input class="search" id="search" placeholder="Search by song title">
+  <div class="loader" id="loader"></div>
+  <div id="tracks"></div>
 </div>
 
 <button class="download-all" id="downloadAll">⬇</button>
@@ -162,17 +89,37 @@ body[data-theme="dark"] .sun{opacity:0;transform:rotate(180deg) scale(0);}
   <button id="loadBtn">Load Playlist</button>
 </div>
 
+<div class="progress" id="progress">
+  <div class="box">
+    <b id="pText">0 / 0</b>
+    <div class="bar"><div id="pBar"></div></div>
+  </div>
+</div>
+
 <audio id="player"></audio>
 
 <script>
 const SPOTIFY_API="https://spotify-api-6yog.vercel.app/api/scrape";
 const SAAVN_API="https://jiosavan-api-with-playlist.vercel.app/api/search/songs";
 
-const tracksDiv=document.getElementById("tracks");
-const player=document.getElementById("player");
-let quality="320kbps", saavnCache={}, currentKey=null;
+const tracksDiv=document.getElementById("tracks"), loader=document.getElementById("loader"), player=document.getElementById("player"),
+      searchInput=document.getElementById("search"), downloadAllBtn=document.getElementById("downloadAll");
 
-/* Quality */
+let quality="320kbps", saavnCache={}, currentKey=null, currentBtn=null, currentCard=null;
+
+// ===== Dark Mode =====
+const modeToggleButton = document.getElementById('modeToggle');
+let currentTheme = localStorage.getItem('theme') || 'light';
+document.body.setAttribute('data-theme', currentTheme);
+modeToggleButton.textContent = currentTheme === 'dark' ? '🌞' : '🌙';
+modeToggleButton.onclick = () => {
+  const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  modeToggleButton.textContent = newTheme === 'dark' ? '🌞' : '🌙';
+};
+
+// ===== Quality buttons =====
 document.querySelectorAll(".quality-btn").forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll(".quality-btn").forEach(x=>x.classList.remove("active"));
@@ -181,56 +128,103 @@ document.querySelectorAll(".quality-btn").forEach(b=>{
   };
 });
 
-/* Dark Mode */
-const modeBtn=document.getElementById("modeToggle");
-modeBtn.onclick=()=>{
-  const t=document.body.getAttribute("data-theme")==="dark"?"light":"dark";
-  document.body.setAttribute("data-theme",t);
-  localStorage.setItem("theme",t);
-  modeBtn.animate([{transform:"scale(1)"},{transform:"scale(.85)"},{transform:"scale(1)"}],{duration:300});
-};
-
-/* FAB */
+// ===== FAB =====
+const fab=document.getElementById("fab"), sheet=document.getElementById("sheet");
 fab.onclick=()=>sheet.classList.add("open");
 
-/* Playlist */
-loadBtn.onclick=async()=>{
-  const id=playlistUrl.value.split("playlist/")[1]?.split("?")[0];
-  if(!id)return alert("Invalid URL");
+// ===== Playlist parser =====
+function getPlaylistId(url){try{const u=new URL(url);const parts=u.pathname.split('/');const idx=parts.indexOf('playlist');if(idx!==-1&&parts[idx+1])return parts[idx+1];return null;}catch{return null;}}
+
+// ===== Skeleton =====
+function showSkeletons(count){tracksDiv.innerHTML="";for(let i=0;i<count;i++){const s=document.createElement("div");s.className="skeleton";s.innerHTML=`<div class="img"></div><div class="info"><div class="line"></div><div class="line short"></div></div>`;tracksDiv.appendChild(s);}}
+
+// ===== Highlight =====
+function highlight(text, term){if(!term)return text;const re=new RegExp(`(${term})`,"gi");return text.replace(re,"<mark>$1</mark>");}
+
+// ===== Prefetch Saavn =====
+async function prefetch(key){if(saavnCache[key])return;try{const res=await fetch(`${SAAVN_API}?query=${encodeURIComponent(key)}&limit=1`);const j=await res.json();saavnCache[key]=j?.data?.results?.[0]?.downloadUrl||[];}catch{saavnCache[key]=[];}}
+
+// ===== Get best quality =====
+function getBest(urls){if(!urls)return null;return urls.find(u=>u.quality===quality)||urls[0];}
+
+// ===== Load Playlist =====
+document.getElementById("loadBtn").onclick=async()=>{
+  const url=document.getElementById("playlistUrl").value.trim();
+  const id=getPlaylistId(url);
+  if(!id){alert("Invalid playlist URL"); return;}
   sheet.classList.remove("open");
+  loader.style.display="block";
+  showSkeletons(5);
+  try{
+    const res=await fetch(`${SPOTIFY_API}?playlist=${id}`);
+    if(!res.ok)throw new Error("Failed to fetch playlist");
+    const j=await res.json();
+    if(!j.tracks||!Array.isArray(j.tracks))throw new Error("No tracks found");
+    document.getElementById("trackCount").textContent=j.tracks.length+" tracks";
+    tracksDiv.innerHTML="";
+    for(const t of j.tracks){
+      const key=`${t.title} ${t.artists}`;
+      await prefetch(key);
+      const c=document.createElement("div");
+      c.className="card"; c.dataset.search=t.title.toLowerCase();
+      c.innerHTML=`<img src="${t.image}"><div class="card-info"><div class="title">${t.title}</div><div class="meta">${t.artists}</div></div><div class="actions"><span class="material-icons play">play_arrow</span><span class="material-icons down">download</span></div>`;
+      tracksDiv.appendChild(c);
 
-  const res=await fetch(`${SPOTIFY_API}?playlist=${id}`);
-  const j=await res.json();
-  tracksDiv.innerHTML="";
-  trackCount.textContent=j.tracks.length+" tracks";
+      c.querySelector(".play").onclick=()=>{
+        const best=getBest(saavnCache[key]);if(!best)return;
+        if(currentKey===key){if(player.paused){player.play(); c.querySelector(".play").textContent="pause";}else{player.pause(); c.querySelector(".play").textContent="play_arrow";} return;}
+        if(currentBtn)currentBtn.textContent="play_arrow"; if(currentCard)currentCard.classList.remove("playing");
+        player.src=best.url; player.play();
+        c.querySelector(".play").textContent="pause"; c.classList.add("playing");
+        currentKey=key; currentBtn=c.querySelector(".play"); currentCard=c;
+      };
 
-  for(const t of j.tracks){
-    const key=`${t.title} ${t.artists}`;
-    const r=await fetch(`${SAAVN_API}?query=${encodeURIComponent(key)}&limit=1`);
-    const s=await r.json();
-    saavnCache[key]=s.data?.results?.[0]?.downloadUrl||[];
+      c.querySelector(".down").onclick=async()=>{
+        const best=getBest(saavnCache[key]);if(!best)return;
+        const b=await (await fetch(best.url)).blob();
+        const a=document.createElement("a");
+        a.href=URL.createObjectURL(b);
+        a.download=`${key.replace(/[<>:"/\\|?*]/g,"_")}.m4a`; a.click();
+      };
+    }
+    downloadAllBtn.style.display="block";
+  }catch(e){alert("Error loading playlist: "+e.message);}
+  loader.style.display="none";
+};
 
-    const c=document.createElement("div");
-    c.className="card";
-    c.innerHTML=`
-      <img src="${t.image}">
-      <div class="card-info">
-        <div class="title">${t.title}</div>
-        <div class="meta">${t.artists}</div>
-      </div>
-      <div class="actions">
-        <span class="material-icons play">play_arrow</span>
-        <span class="material-icons down">download</span>
-      </div>`;
-    tracksDiv.appendChild(c);
+// ===== Audio ended =====
+player.onended=()=>{if(currentBtn)currentBtn.textContent="play_arrow"; if(currentCard)currentCard.classList.remove("playing"); currentKey=null; currentBtn=null;};
 
-    c.querySelector(".play").onclick=()=>{
-      const u=saavnCache[key].find(x=>x.quality===quality)||saavnCache[key][0];
-      if(!u)return;
-      player.src=u.url; player.play();
-    };
+// ===== Search =====
+searchInput.oninput=e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll(".card").forEach(c=>{
+    const title=c.querySelector(".title").textContent;
+    if(title.toLowerCase().includes(q)){
+      c.style.display="flex";
+      c.querySelector(".title").innerHTML=highlight(title,q);
+    }else c.style.display="none";
+  });
+};
+
+// ===== Download All =====
+downloadAllBtn.onclick=async()=>{
+  const entries=Object.entries(saavnCache);
+  const progress=document.getElementById("progress");
+  const pBar=document.getElementById("pBar");
+  const pText=document.getElementById("pText");
+  progress.classList.add("show");
+  for(let i=0;i<entries.length;i++){
+    const [k,u]=entries[i]; const best=getBest(u); if(!best) continue;
+    const b=await (await fetch(best.url)).blob();
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(b);
+    a.download=`${k.replace(/[<>:"/\\|?*]/g,"_")}.m4a`; a.click();
+    pText.textContent=`${i+1} / ${entries.length}`;
+    pBar.style.width=((i+1)/entries.length*100)+"%";
+    await new Promise(r=>setTimeout(r,700));
   }
-  downloadAll.style.display="block";
+  progress.classList.remove("show");
 };
 </script>
 </body>
