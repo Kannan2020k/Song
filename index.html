@@ -1,1133 +1,991 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="revisit-after" content="1 days" />
-    <title>
-      Spotify Downloader – SpotiDost: Fast Spotify to MP3 (Tracks, Albums, Playlists)
-    </title>
-    <meta name="description" content="SpotiDost is a fast and simple Spotify to MP3 downloader for tracks, albums and playlists. Paste a Spotify link, click Download, and grab the songs you love." />
-    <!-- Primary Meta Tags -->
-    <meta name="keywords" content="Spotify downloader, download Spotify to MP3, Spotify track download, playlist downloader, album downloader, SpotiDost" />
-    <meta name="author" content="SpotiDost Team" />
-    <meta name="robots" content="index, follow" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://spotidost.com/" />
-    <meta property="og:title" content="Spotify Downloader – SpotiDost: Fast Spotify to MP3 (Tracks, Albums, Playlists)" />
-    <meta property="og:description" content="SpotiDost is a fast and simple Spotify to MP3 downloader for tracks, albums and playlists. Paste a Spotify link, click Download, and grab the songs you love." />
-    <meta property="og:image" content="https://spotidost.com/images/meta/spotidost-spotify-downloader.webp" />
-    <meta property="og:site_name" content="SpotiDost" />
-    <meta property="og:locale" content="en_US" />
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://spotidost.com/" />
-    <meta name="twitter:title" content="Spotify Downloader – SpotiDost: Fast Spotify to MP3 (Tracks, Albums, Playlists)" />
-    <meta name="twitter:description" content="SpotiDost is a fast and simple Spotify to MP3 downloader for tracks, albums and playlists. Paste a Spotify link, click Download, and grab the songs you love." />
-    <meta name="twitter:image" content="https://spotidost.com/images/meta/spotidost-spotify-downloader.webp" />
-    <meta name="twitter:site" content="@SpotiDost" />
-    <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
-    <link rel="shortcut icon" href="/images/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="SpotiDost" />
-    <link rel="manifest" href="/images/site.webmanifest" />
-    <meta name="color-scheme" content="light dark" />
-    <script>
-      (function() {
-  const KEY = &#39;spoti_theme&#39;;
-  let theme = null;
-  try {
-    theme = localStorage.getItem(KEY);
-  } catch (e) {}
-  if (!theme) {
-    const m = document.cookie.match(/(?:^|;\s*)theme=(light|dark)/);
-    if (m) theme = m[1];
-  }
-  if (!theme) {
-    const prefersDark = window.matchMedia &amp;&amp; window.matchMedia(&#39;(prefers-color-scheme: dark)&#39;).matches;
-    theme = prefersDark ? &#39;dark&#39; : &#39;light&#39;;
-  }
-  document.documentElement.setAttribute(&#39;data-bs-theme&#39;, theme);
-  document.cookie = &#39;theme=&#39; + theme + &#39;; Max-Age=31536000; Path=/; SameSite=Lax; Secure; Domain=.spotidost.com&#39;;
-  window.__SPOTI_THEME__ = theme;
-})();
-    </script>
-    <link id="theme-light" rel="stylesheet" href="https://spotidost.com/assets/css/flatly.css" media="(prefers-color-scheme: light)" />
-    <link id="theme-dark" rel="stylesheet" href="https://spotidost.com/assets/css/darkly.css" media="(prefers-color-scheme: dark)" />
-    <script>
-      (function () {
-  var t = window.__SPOTI_THEME__;
-  if (!t) return;
-  var L = document.getElementById(&#39;theme-light&#39;);
-  var D = document.getElementById(&#39;theme-dark&#39;);
-  if (L &amp;&amp; D) {
-    L.media = (t === &#39;light&#39;) ? &#39;all&#39; : &#39;not all&#39;;
-    D.media = (t === &#39;dark&#39;)  ? &#39;all&#39; : &#39;not all&#39;;
-  }
-})();
-    </script>
-    <script>
-      window.setTheme=function(){};
-    </script>
-    <meta name="google-adsense-account" content="ca-pub-2309738042229483" />
-    <!-- Load AdSense ONCE per page (sample client id) -->
-    <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2309738042229483" crossorigin="anonymous">
-    </script>
-    <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8548817772195549" crossorigin="anonymous">
-    </script>
-    <link rel="preload" href="https://spotidost.com/assets/fonts/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2" as="font" type="font/woff2" crossorigin="" />
-    <link rel="preload" href="https://spotidost.com/assets/fonts/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2" as="font" type="font/woff2" crossorigin="" />
-    <link rel="preload" href="https://spotidost.com/assets/fonts/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2" as="font" type="font/woff2" crossorigin="" />
-    <link rel="preload" href="https://spotidost.com/assets/fonts/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font" type="font/woff2" crossorigin="" />
-    <link rel="preload" href="/assets/js/bootstrap.bundle.min.js" as="script" />
-    <link rel="canonical" href="https://spotidost.com/" />
-    <!-- Google tag (gtag.js) -->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SYS005574L">
-    </script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag(&#39;js&#39;, new Date());
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tamil Music - YouTube Style</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  gtag(&#39;config&#39;, &#39;G-SYS005574L&#39;);
-    </script>
-    <script>
-      window.dataLayer=window.dataLayer||[],window.dataLayer.push({&#34;gtm.start&#34;:Date.now(),event:&#34;gtm.js&#34;}),function(i){var e=!1;function t(){if(!e){e=!0;var t=document.createElement(&#34;script&#34;);t.async=!0,t.src=&#34;https://www.googletagmanager.com/gtm.js?id=&#34;+i,document.head.appendChild(t)}}var n=function(){t()};[&#34;pointerdown&#34;,&#34;click&#34;,&#34;scroll&#34;,&#34;mousemove&#34;,&#34;keydown&#34;,&#34;touchstart&#34;].forEach((function(i){window.addEventListener(i,n,{passive:!0,once:!0})})),&#34;requestIdleCallback&#34;in window?requestIdleCallback(t,{timeout:1500}):window.addEventListener(&#34;load&#34;,t,{once:!0})}(&#34;GTM-K7SZSQJ2&#34;);
-    </script>
-    <style>
-      @keyframes shadowPulse{0%,to{box-shadow:0 8px 20px rgba(186,104,200,.35)}25%{box-shadow:0 8px 20px rgba(121,134,203,.35)}50%{box-shadow:0 8px 20px rgba(129,212,250,.35)}75%{box-shadow:0 8px 20px rgba(179,136,255,.35)}}@keyframes skel-shimmer{0%{background-position:100%0}to{background-position:0 0}}:root{--btn-a:#3f51b5;--btn-b:#673ab7;--card-shadow:0 6px 20px rgba(0,0,0,.06)}*{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.navbar-brand,h1,h2,h3{font-weight:700}h2{font-size:clamp(1.6rem,3vw,2.2rem)}.lead-sm{font-size:clamp(.98rem,1.6vw,1.06rem)}.section{margin-bottom:2rem}.card-clean{border:var(--card-border,1px solid #f2f1f1) !important;box-shadow:var(--card-shadow);border-radius:14px}.small-muted{font-size:.95rem;color:var(--bs-secondary-color)}#statusStrip{display:none}.status-wrap{background:var(--bs-secondary-bg);border-radius:.9rem;padding:.9rem 1rem;display:flex;align-items:center;justify-content:space-between}.status-pill,.status-title,.table thead th{font-weight:600}.status-pill{background:var(--bs-tertiary-bg)}#inpUrl{height:56px}.btn-download{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.54rem 1rem;border-radius:10px;font-weight:600;background:linear-gradient(90deg,var(--btn-a),var(--btn-b));color:#fff;box-shadow:0 8px 18px rgba(0,114,255,.18);white-space:nowrap;line-height:1;text-decoration:none;border:0}.btn-download:focus,.btn-download:hover{color:#fff;filter:brightness(.98)}.table td .btn-download{padding:.5rem .9rem;border-radius:8px}.result-card .card-body{display:flex;align-items:center;gap:16px}.result-card .thumb{width:84px;height:84px;object-fit:cover;border-radius:12px;flex:0 0 84px}.result-title{font-weight:600;margin:0 0 .15rem}.result-artist{margin:0;color:var(--bs-secondary-color)}.center-footer{display:flex;justify-content:center;padding:1rem}#resultsSection .table td,#resultsSection .table th,.table td,.table th{vertical-align:middle}@media (max-width:576px){.result-card .thumb{width:72px;height:72px}.btn-download{padding:.56rem 1rem;font-size:.98rem}}#howto&gt;div&gt;div&gt;div&gt;div&gt;ol{line-height:2!important}.thumb-hover{filter:grayscale(60%);transition:filter .4s ease,transform .3s ease}.thumb-hover:hover{filter:grayscale(0%)}.result-card{transition:transform .3s ease;animation:shadowPulse 20s linear infinite}.status-pill{--pct:0;--h:0;--fill:hsl(var(--h) 80% 50% / .55);--border:hsl(var(--h) 70% 45% / .8);display:inline-flex;align-items:center;min-height:38px;padding:.5rem .875rem;border:1px solid var(--border);border-radius:999px;color:#2c3e50;background:linear-gradient(90deg,var(--fill)0,var(--fill) calc(var(--pct)*1%),transparent calc(var(--pct)*1%),transparent 100%),#f8f9fa;transition:background-color .25s ease,border-color .25s ease,color .25s ease}.status-pill .status-label,.status-pill&gt;span{font-weight:600;letter-spacing:.2px}.status-pill.is-done{--pct:100;background:#e8f6ed;border-color:#b9e6c7;color:#146c43}@media (prefers-reduced-motion:reduce){.status-pill{transition:none}}.status-pill.is-success{--h:120;border-color:#b9e6c7;color:#146c43;background:linear-gradient(90deg,var(--fill)0,var(--fill) calc(var(--pct)*1%),transparent calc(var(--pct)*1%),transparent 100%),#e8f6ed}.status-pill.is-danger{--h:0;border-color:#f5c2c7;color:#842029;background:linear-gradient(90deg,var(--fill)0,var(--fill) calc(var(--pct)*1%),transparent calc(var(--pct)*1%),transparent 100%),#fdecec}:root{--skel-base:#e9ecef;--skel-hi:#f8f9fa}[data-bs-theme=dark]{--skel-base:#2b3035;--skel-hi:#3b4147}.skel,.skel-img{border-radius:.5rem}.skel{display:block;background:linear-gradient(90deg,var(--skel-base) 25%,var(--skel-hi) 37%,var(--skel-base) 63%);background-size:400% 100%;animation:skel-shimmer 1.2s ease-in-out infinite}.skel-img{width:80px;height:80px}.skel-line{height:14px}.skel-btn{height:38px;border-radius:.5rem}:root{--tbl-border:rgba(0,0,0,.08);--tbl-row-alt:rgba(0,0,0,.03);--tbl-row-hover:rgba(0,0,0,.06)}[data-bs-theme=dark]{--tbl-border:rgba(255,255,255,.10);--tbl-row-alt:rgba(255,255,255,.05);--tbl-row-hover:rgba(255,255,255,.09)}#resultsSection .table-responsive{border:1px solid var(--tbl-border)!important;border-radius:.75rem!important;overflow:hidden}#resultsSection .table{border-collapse:separate!important;border-spacing:0!important}#resultsSection .table&gt;:not(caption)&gt;*&gt;*{border-color:var(--tbl-border)!important}#resultsSection .table thead th{border-bottom-color:var(--tbl-border)!important}#resultsSection .table tbody&gt;tr:nth-child(odd)&gt;*{background-color:var(--tbl-row-alt)!important}#resultsSection .table-hover tbody&gt;tr:hover&gt;*{background-color:var(--tbl-row-hover)!important}#resultsSection .table td.text-end{white-space:nowrap}.result-card .btn-download+.btn-container{margin-left:.5rem}.result-card .btn-container{display:inline-block}.kofi-button{--ko-start:#ff7d78;--ko-end:#ff6863;--ko-shadow:rgba(255,104,99,.28);display:inline-flex;align-items:center;gap:.5rem;padding: .45rem .85rem;border-radius:.6rem;font-weight:700;font-size:.95rem;line-height:1;color:#fff!important;text-decoration:none;background:linear-gradient(180deg,var(--ko-start),var(--ko-end))!important;border:1px solid rgba(0,0,0,.08);box-shadow:0 10px 24px var(--ko-shadow),inset 0-2px 0 rgba(0,0,0,.12);transition:transform .12s ease,box-shadow .12s ease}.kofi-button:hover{transform:translateY(-1px);box-shadow:0 14px 28px var(--ko-shadow),inset 0-2px 0 rgba(0,0,0,.16)}.kofi-button:active{transform:translateY(0);box-shadow:0 8px 18px var(--ko-shadow),inset 0 2px 0 rgba(0,0,0,.18)}.kofi-button:focus{outline:0;box-shadow:0 0 0 .2rem rgba(255,104,99,.25),0 10px 24px var(--ko-shadow)}.kofi-button .kofiimg{width:18px;height:18px;display:block;object-fit:contain;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12))}.kofi-button .kofitext{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap}[data-bs-theme=dark] .kofi-button{--ko-shadow:rgba(0,0,0,.35);border-color:rgba(255,255,255,.08)}@media (max-width:480px){.result-card .btn-download,.result-card .kofi-button{width:100%;justify-content:center}.result-card .btn-download+.btn-container{margin-left:0;margin-top:.5rem;display:block}}.img-thumbnail{padding:.35rem!important;border:1px solid #e1e1e1!important} [data-bs-theme=&#34;dark&#34;]{ --card-border:0; }.align-items-end{align-items:normal!important}#st-1{z-index:1!important}
-    </style>
-    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=69076f58360887b4c39c9401&amp;product=sop" async="async">
-    </script>
-  </head>
-  <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-      &lt;iframe src=&#34;https://www.googletagmanager.com/ns.html?id=GTM-K7SZSQJ2&#34;
-height=&#34;0&#34; width=&#34;0&#34; style=&#34;display:none;visibility:hidden&#34;&gt;&lt;/iframe&gt;
-    </noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <!-- Nav -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-      <div class="container">
-        <a class="navbar-brand" href="https://spotidost.com/">        <span>        <img src="https://spotidost.com/images/favicon.svg" width="32" height="32" fetchpriority="high" loading="eager" />
-</span>
-        SpotiDost
-</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navMain" class="collapse navbar-collapse">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="https://spotidost.com/spotify-to-mp3">              <img src="../images/svg/mp3.svg" width="16" height="16" fetchpriority="low" loading="lazy" />
-              Spotify to Mp3
-</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://spotidost.com/album-downloader">              <img src="../images/svg/album.svg" width="16" height="16" fetchpriority="low" loading="lazy" />
-              Album Downloader
-</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://spotidost.com/playlist-downloader">              <img src="../images/svg/playlist.svg" width="16" height="16" fetchpriority="low" loading="lazy" />
-              Playlist Downloader
-</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://spotidost.com/terms">              <img src="../images/svg/terms.svg" width="16" height="16" fetchpriority="low" loading="lazy" />
-              Terms
-</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://spotidost.com/privacy">              <img src="../images/svg/privacy.svg" width="16" height="16" fetchpriority="low" loading="lazy" />
-              Privacy
-</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://spotidost.com/cookies">              <img src="../images/svg/cookies.svg" width="16" height="16" fetchpriority="low" loading="lazy" />
-              Cookies
-</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://spotidost.com/contact">              <img src="../images/svg/contact.svg" width="16" height="16" fetchpriority="low" loading="lazy" />
-              Contact
-</a>
-            </li>
-          </ul>
-          <button id="themeToggle" class="btn btn-outline-light btn-sm ms-lg-3">
-            🌙
+body { 
+  font-family: 'Roboto', 'Segoe UI', sans-serif; 
+  background: #0f0f0f;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+/* Header */
+.header {
+  background: #212121;
+  border-bottom: 1px solid #303030;
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: #ff0000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 640px;
+  display: flex;
+  align-items: center;
+}
+
+.search-box {
+  flex: 1;
+  display: flex;
+  border: 1px solid #303030;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #121212;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-input::placeholder { color: #aaaaaa; }
+
+.search-btn {
+  padding: 12px 20px;
+  background: #303030;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #404040;
+  transition: background 0.2s ease;
+}
+
+.search-btn:hover { background: #404040; }
+
+/* Main Content */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  padding-bottom: 120px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+/* Music Grid */
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.song-card {
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.song-card:hover { transform: scale(1.02); }
+
+.song-image-container {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #303030;
+}
+
+.song-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
+.play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.song-card:hover .play-overlay { opacity: 1; }
+
+.play-overlay-btn {
+  width: 48px;
+  height: 48px;
+  background: #ffffff;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000000;
+  transition: transform 0.1s ease;
+}
+
+.play-overlay-btn:hover { transform: scale(1.1); }
+
+.song-info {
+  padding: 12px 4px;
+}
+
+.song-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+}
+
+.song-artist {
+  font-size: 12px;
+  color: #aaaaaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Player Bar */
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #212121;
+  border-top: 1px solid #303030;
+  padding: 8px 16px;
+  z-index: 1000;
+}
+
+.player-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Player Info */
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.player-thumbnail {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #303030;
+}
+
+.player-text {
+  min-width: 0;
+  flex: 1;
+}
+
+.player-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+}
+
+.player-artist {
+  font-size: 12px;
+  color: #aaaaaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Player Controls */
+.player-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.1s ease;
+}
+
+.control-btn:hover { 
+  background: rgba(255,255,255,0.1); 
+  transform: scale(1.1);
+}
+
+.control-btn.active { color: #ff0000; }
+
+.play-pause-btn {
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 20px;
+  margin: 0 8px;
+}
+
+.play-pause-btn:hover { 
+  background: #ffffff;
+  transform: scale(1.05);
+}
+
+/* Progress Bar */
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.time-label {
+  font-size: 11px;
+  color: #aaaaaa;
+  min-width: 35px;
+  text-align: center;
+}
+
+.progress-bar-container {
+  flex: 1;
+  height: 4px;
+  background: #404040;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s ease;
+}
+
+.progress-bar-container:hover .progress-bar {
+  background: #ff0000;
+}
+
+/* Volume and Options */
+.player-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.volume-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  background: #404040;
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.option-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: #aaaaaa;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.1s ease;
+}
+
+.option-btn:hover { 
+  background: rgba(255,255,255,0.1); 
+  color: #ffffff;
+}
+
+.option-btn.active { color: #ff0000; }
+
+/* Queue Panel */
+.queue-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: #212121;
+  border-left: 1px solid #303030;
+  transition: right 0.3s ease;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+
+.queue-panel.active { right: 0; }
+
+.queue-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #303030;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-queue {
+  background: none;
+  border: none;
+  color: #aaaaaa;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.close-queue:hover { 
+  background: rgba(255,255,255,0.1); 
+  color: #ffffff;
+}
+
+.queue-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 24px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.queue-item:hover { background: rgba(255,255,255,0.1); }
+
+.queue-item.playing { 
+  background: rgba(255,0,0,0.1);
+  border-left: 3px solid #ff0000;
+}
+
+.queue-thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #303030;
+  flex-shrink: 0;
+}
+
+.queue-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.queue-title {
+  font-size: 14px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+}
+
+.queue-artist {
+  font-size: 12px;
+  color: #aaaaaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #aaaaaa;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #303030;
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Icons */
+.icon { font-family: 'Material Icons'; font-size: inherit; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-content { padding: 0 16px; }
+  .search-container { display: none; }
+  .main-content { padding: 16px; }
+  .music-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  
+  .player-content {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .player-info { order: 1; }
+  .player-controls { order: 2; }
+  .player-options { order: 3; justify-content: center; }
+  
+  .queue-panel { width: 100%; right: -100%; }
+  .volume-container { display: none; }
+}
+
+@media (max-width: 480px) {
+  .control-buttons { gap: 4px; }
+  .control-btn { width: 28px; height: 28px; font-size: 16px; }
+  .play-pause-btn { width: 36px; height: 36px; font-size: 18px; }
+}
+</style>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon"><i class="icon">music_note</i></div>
+        <span>Tamil Music</span>
+      </div>
+      
+      <div class="search-container">
+        <div class="search-box">
+          <input type="text" class="search-input" placeholder="Search songs, artists, or albums" id="searchInput">
+          <button class="search-btn" id="searchBtn">
+            <i class="icon">search</i>
           </button>
         </div>
       </div>
-    </nav>
-    <main class="container my-4">
-      <header class="text-center section">
-        <h2 class="mb-2 h1" style="font-weight:700;">
-          Spotify Downloader – SpotiDost!
-        </h2>
-        <p class="text-muted lead-sm mb-0">
-          Simple, quick Spotify to MP3 for tracks, albums &amp; playlists.
-        </p>
-      </header>
-      <!-- Input -->
-      <section id="inputSection" class="card card-clean section">
-        <div class="card-body">
-          <form id="frm" class="row gy-3 align-items-end" novalidate="">
-            <div class="col-12 col-lg-9">
-              <input id="inpUrl" name="url" type="url" class="form-control form-control-lg" placeholder="Paste Spotify track, album or playlist link" autocomplete="off" required="" autofocus="" />
-            </div>
-            <div class="col-12 col-lg-3 d-grid d-lg-flex gap-2">
-              <button id="btnFetch" class="btn btn-primary btn-lg flex-grow-1" type="submit">
-                Download
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
-      <!-- Status (text only) -->
-      <section id="statusStrip" class="section">
-        <div class="status-wrap">
-          <div class="status-title">
-            Status
-          </div>
-          <div id="statusText" class="status-pill">
-            Starting…
-          </div>
-        </div>
-      </section>
-      <!-- Results -->
-      <section id="resultsSection" class="section d-none">
-        <!-- Skeleton while verifying/fetching -->
-        <div id="resultsSkeleton" class="row d-none" role="status" aria-live="polite" aria-busy="true">
-          <div class="col-12 col-md-8 col-lg-6 mx-auto">
-            <div class="card">
-              <div class="card-body d-flex gap-3 align-items-start">
-                <div class="skel skel-img">
-                </div>
-                <div class="flex-grow-1">
-                  <div class="skel skel-line w-75 mb-2">
-                  </div>
-                  <div class="skel skel-line w-50 mb-3">
-                  </div>
-                  <div class="skel skel-btn w-50">
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer center-footer">
-                <div class="skel skel-btn w-50 mx-auto">
-                </div>
-              </div>
-            </div>
-            <span class="visually-hidden">            Loading…
-</span>
-          </div>
-        </div>
-        <!-- Single track -->
-        <div id="trackCard" class="row d-none">
-          <div class="col-12 col-md-8 col-lg-6 mx-auto">
-            <div class="card card-clean result-card">
-              <div class="card-body">
-                <img id="trackImg" src="" alt="Artwork" class="thumb" fetchpriority="low" loading="lazy" />
-                <div class="flex-grow-1">
-                  <div id="trackTitle" class="result-title">
-                    Track Title
-                  </div>
-                  <p id="trackArtists" class="result-artist" style="display:none;margin-bottom: 5px;">
-                    Artist
-                  </p>
-                  <button id="trackDownloadBtn" type="button" class="btn-download">
-                    Download MP3
-                  </button>
-                  <div class="btn-container" style=" vertical-align: bottom; ">
-                    <a title="Support me on ko-fi.com" class="kofi-button" style="background-color:#ff6863;" rel="nofollow" href="https://ko-fi.com/spotidost" target="_blank">                    <span class="kofitext">                    <img src="https://spotidost.com/images/ko-fi/kofi.png" alt="Ko-fi donations" class="kofiimg" width="22" height="15" fetchpriority="low" loading="lazy" />
-                    Donate Us
-</span>
-</a>
-                  </div>
-                  <small id="trackSource" class="ms-2 text-muted" style="display:none"></small>
-                </div>
-              </div>
-              <div class="card-footer center-footer">
-                <button id="againBtnTrack" class="btn btn-primary">
-                  Download another
-                </button>
-              </div>
-              <div class="card-footer center-footer">
-                <!-- ShareThis BEGIN -->
-                <div class="sharethis-inline-share-buttons">
-                </div>
-                <!-- ShareThis END -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Album/Playlist -->
-        <div id="tableSection" class="d-none">
-          <div class="card card-clean">
-            <div class="card-body">
-              <div class="d-flex align-items-baseline justify-content-between flex-wrap">
-                <h2 id="tableHeading" class="h5 mb-3">
-                  Results
-                </h2>
-                <small id="inputEcho" class="text-muted" style="display:none;font-size: 0;"></small>
-                <div class="btn-container" style=" vertical-align: bottom; ">
-                  <a title="Support me on ko-fi.com" class="kofi-button" style="background-color:#ff6863;" rel="nofollow" href="https://ko-fi.com/spotidost" target="_blank">                  <span class="kofitext">                  <img src="https://spotidost.com/images/ko-fi/kofi.png" alt="Ko-fi donations" class="kofiimg" width="22" height="15" fetchpriority="low" loading="lazy" />
-                  Donate Us
-</span>
-</a>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                  <thead>
-                    <tr>
-                      <th style="width:70%">
-                        Track
-                      </th>
-                      <th class="text-end">
-                        Links
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody id="resultsTableBody">
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="btn-container" style="vertical-align: bottom;text-align: -webkit-center;margin-bottom: 8px;">
-              <a title="Support me on ko-fi.com" class="kofi-button" style="background-color:#ff6863;" rel="nofollow" href="https://ko-fi.com/spotidost" target="_blank">              <span class="kofitext">              <img src="https://spotidost.com/images/ko-fi/kofi.png" alt="Ko-fi donations" class="kofiimg" width="22" height="15" fetchpriority="low" loading="lazy" />
-              Donate Us
-</span>
-</a>
-            </div>
-            <div class="card-footer center-footer">
-              <button id="againBtnTable" class="btn btn-primary">
-                Download another
-              </button>
-            </div>
-            <div class="card-footer center-footer">
-              <!-- ShareThis BEGIN -->
-              <div class="sharethis-inline-share-buttons">
-              </div>
-              <!-- ShareThis END -->
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- HOW TO SECTION -->
-      <!-- HOMEPAGE (TRACKS) -->
-      <section id="howto" class="section spotify-download-guide">
-        <div class="card card-clean">
-          <div class="card-body">
-            <h2 class="h4 mb-4">
-              How to Download Spotify Tracks?
-            </h2>
-            <p>
-              You can download Spotify tracks using the online tool
-              <strong>              SpotiDost
-</strong>
-              , 
-                a simple and powerful Spotify downloader tool. SpotiDost supports 
-                Spotify Tracks to MP3 conversions, Album Downloaders, and Playlist Downloaders. 
-                Follow the instructions below to download Spotify tracks on both 
-                mobile and PC editions.
-            </p>
-            <div class="row g-4">
-              <div class="col-md-12">
-                <h3 class="h6 mb-3">
-                  For Mobile Users:
-                </h3>
-                <ol class="mb-0">
-                  <li>
-                    Open the
-                    <strong>                    Spotify
-</strong>
-                    application on your mobile device (Android/iOS).
-                  </li>
-                  <li>
-                    Choose the track(s) that you want to download using
-                    <strong>                    <a href="../">                    SpotiDost Tracks Downloader
-</a>
-</strong>
-                    .
-                  </li>
-                  <li>
-                    Tap the
-                    <em>                    Share
-</em>
-                    icon or
-                    <em>                    ⋯
-</em>
-                    on the track.
-                  </li>
-                  <li>
-                    Select
-                    <strong>                    Copy Link
-</strong>
-                    .
-                  </li>
-                  <li>
-                    Open the
-                    <strong>                    SpotiDost Tracks Downloader
-</strong>
-                    .
-                  </li>
-                  <li>
-                    Paste the copied URL into the form and click the
-                    <strong>                    Download
-</strong>
-                    button.
-                  </li>
-                  <li>
-                    The verification process will begin - once completed, the download link will appear.
-                  </li>
-                  <li>
-                    Click the
-                    <strong>                    Download MP3
-</strong>
-                    button to start the download.
-                  </li>
-                  <li>
-                    Wait 5–10 seconds for the downloading process to initiate.
-                  </li>
-                  <li>
-                    The song will be downloaded to your device at your chosen location.
-                  </li>
-                </ol>
-                <div class="row g-4 mt-1">
-                  <div class="col-md-3">
-                    <div class="text-center">
-                      <h3 class="h6">
-                        Step 1
-                      </h3>
-                      <img src="https://spotidost.com/images/how-to/tracks/1.webp" alt="Choose Spotify Track" class="img-fluid img-thumbnail mb-3 rounded w-75 thumb-hover" width="1080" height="2400" fetchpriority="low" loading="lazy" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="text-center">
-                      <h3 class="h6">
-                        Step 2
-                      </h3>
-                      <img src="https://spotidost.com/images/how-to/tracks/2.webp" alt="Click Copy Button" class="img-fluid img-thumbnail mb-3 rounded w-75 thumb-hover" width="1080" height="2400" fetchpriority="low" loading="lazy" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="text-center">
-                      <h3 class="h6">
-                        Step 3
-                      </h3>
-                      <img src="https://spotidost.com/images/how-to/tracks/3.webp" alt="Paste the URL in the Form" class="img-fluid img-thumbnail mb-3 rounded w-75 thumb-hover" width="1080" height="2400" fetchpriority="low" loading="lazy" />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="text-center">
-                      <h3 class="h6">
-                        Step 4
-                      </h3>
-                      <img src="https://spotidost.com/images/how-to/tracks/4.webp" alt="Download Spotify Tracks" class="img-fluid img-thumbnail mb-3 rounded w-75 thumb-hover" width="1080" height="2400" fetchpriority="low" loading="lazy" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <h3 class="h6 mb-3">
-                  For Desktop users
-                </h3>
-                <ol class="mb-0">
-                  <li>
-                    Open the official Spotify website:
-                    <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer">                    open.spotify.com
-</a>
-                    .
-                  </li>
-                  <li>
-                    Search for and select the track you want to download.
-                  </li>
-                  <div class="text-center">
-                    <h3 class="h6">
-                      Step 1
-                    </h3>
-                    <img src="https://spotidost.com/images/how-to/tracks/pc-1.webp" alt="Search Spotify Track" class="img-fluid img-thumbnail mb-3 rounded w-75 thumb-hover" width="1920" height="912" fetchpriority="low" loading="lazy" />
-                  </div>
-                  <li>
-                    Copy the URL from the browser address bar, or right-click the track name and select
-                    <strong>                    Share → Copy URL
-</strong>
-                    .
-                  </li>
-                  <div class="text-center">
-                    <h3 class="h6">
-                      Step 2
-                    </h3>
-                    <img src="https://spotidost.com/images/how-to/tracks/pc-2.webp" alt="Copy Track URL" class="img-fluid img-thumbnail mb-3 rounded w-75 thumb-hover" width="1920" height="912" fetchpriority="low" loading="lazy" />
-                  </div>
-                  <li>
-                    Open the
-                    <strong>                    SpotiDost Tracks Downloader
-</strong>
-                    .
-                  </li>
-                  <li>
-                    Paste the copied URL and click the
-                    <strong>                    Download
-</strong>
-                    button.
-                  </li>
-                  <div class="text-center">
-                    <h3 class="h6">
-                      Step 3
-                    </h3>
-                    <img src="https://spotidost.com/images/how-to/tracks/pc-3.webp" alt="Paste the URL" class="img-fluid img-thumbnail mb-3 rounded w-75 thumb-hover" width="1920" height="912" fetchpriority="low" loading="lazy" />
-                  </div>
-                  <li>
-                    The verification process will begin - once completed, the download link will appear.
-                  </li>
-                  <li>
-                    Click the
-                    <strong>                    Download MP3
-</strong>
-                    button to start the download.
-                  </li>
-                  <div class="text-center">
-                    <h3 class="h6">
-                      Step 4
-                    </h3>
-                    <img src="https://spotidost.com/images/how-to/tracks/pc-4.webp" alt="Download Mp3" class="img-fluid img-thumbnail mb-3 rounded w-75 thumb-hover" width="1920" height="912" fetchpriority="low" loading="lazy" />
-                  </div>
-                  <li>
-                    Wait 5–10 seconds for the downloading process to initiate.
-                  </li>
-                  <li>
-                    The song will be downloaded to your device at your chosen location.
-                  </li>
-                </ol>
-              </div>
-            </div>
-            <p class="small-muted mt-3 mb-0">
-              Artist pages aren’t supported-open an artist, pick a song, and copy its
-              <em>              track
-</em>
-              link.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section id="features" class="section">
-        <div class="card card-clean">
-          <div class="card-body">
-            <h2 class="h4 mb-3">
-              Features
-            </h2>
-            <ul class="mb-0">
-              <li>
-                Fast resolution for
-                <strong>                tracks, albums, and playlists
-</strong>
-                .
-              </li>
-              <li>
-                Modern UI with
-                <strong>                Light/Dark
-</strong>
-                mode.
-              </li>
-              <li>
-                Buttons tuned for mobile &amp; desktop—single line, one tap.
-              </li>
-              <li>
-                Backup resolver to handle slow or region-gated tracks.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <section class="section">
-        <div class="card card-clean">
-          <div class="card-body">
-            <h2 class="h4 mb-3">
-              Benefits
-            </h2>
-            <ul class="mb-0">
-              <li>
-                <strong>                One-click
-</strong>
-                downloads for tracks; bulk from albums/playlists.
-              </li>
-              <li>
-                <strong>                Ad-friendly
-</strong>
-                layout to support your placements.
-              </li>
-              <li>
-                Works everywhere—no app or extension needed.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <section class="section">
-        <div class="card card-clean">
-          <div class="card-body">
-            <h2 class="h4 mb-3">
-              Why choose SpotiDost?
-            </h2>
-            <p class="mb-0">
-              Because it’s simple and it works. Paste a link, hit Download, and get what you need—fast buttons, no clutter.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section id="faq" class="section">
-        <div class="card card-clean">
-          <div class="card-body">
-            <h2 class="h4 mb-4">
-              FAQs
-            </h2>
-            <h3 class="h6">
-              How do I download a playlist or album?
-            </h3>
-            <p>
-              Paste the playlist/album link and press
-              <strong>              Download
-</strong>
-              . We list all tracks; click
-              <strong>              Download MP3
-</strong>
-              next to each song.
-            </p>
-            <h3 class="h6">
-              Why don’t you support artist links?
-            </h3>
-            <p>
-              Artist pages don’t point to a specific track. Open the artist, pick a song, and copy its
-              <strong>              track
-</strong>
-              link instead.
-            </p>
-            <h3 class="h6">
-              Does it work on my phone?
-            </h3>
-            <p class="mb-0">
-              Yes—SpotiDost is mobile-first and runs in your browser.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section class="section">
-        <div class="card card-clean">
-          <div class="card-body">
-            <h2 class="h6 mb-2">
-              Disclaimer
-            </h2>
-            <p class="small mb-0">
-              SpotiDost is not affiliated with or endorsed by Spotify AB. All music and artwork remain the property of their respective owners. Please respect copyright laws and your local regulations.
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
-    <footer class="bg-body-tertiary mt-auto">
-      <div class="container py-4">
-        <div class="row g-4">
-          <div class="col-12 col-md-4">
-            <h6 class="fw-semibold mb-2">
-              SpotiDost
-            </h6>
-            <p class="mb-0 text-muted">
-              Fast, simple Spotify MP3 downloader for tracks, albums and playlists.
-            </p>
-          </div>
-          <div class="col-6 col-md-4">
-            <h6 class="fw-semibold mb-2">
-              Links
-            </h6>
-            <ul class="list-unstyled mb-0">
-              <li>
-                <a style="text-decoration:none;" href="https://spotidost.com/spotify-to-mp3" class="link-underline-opacity-0">                Spotify To Mp3
-</a>
-              </li>
-              <li>
-                <a style="text-decoration:none;" href="https://spotidost.com/album-downloader" class="link-underline-opacity-0">                Spotify Album Downloader
-</a>
-              </li>
-              <li>
-                <a style="text-decoration:none;" href="https://spotidost.com/playlist-downloader" class="link-underline-opacity-0">                Spotify Playlist Downloader
-</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-6 col-md-4">
-            <h6 class="fw-semibold mb-2">
-              Theme
-            </h6>
-            <p class="mb-2 text-muted">
-              Prefer dark mode?
-            </p>
-            <button id="themeToggleFoot" class="btn btn-outline-primary btn-sm">
-              🌙
-            </button>
-          </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h2 class="section-title" id="sectionTitle">Tamil Hits</h2>
+    <div class="music-grid" id="musicGrid"></div>
+    
+    <div class="loading" id="loading" style="display:none;">
+      <div class="loading-spinner"></div>
+      <div>Loading music...</div>
+    </div>
+  </div>
+
+  <!-- Player Bar -->
+  <div class="player-bar">
+    <div class="player-content">
+      <!-- Song Info -->
+      <div class="player-info">
+        <img class="player-thumbnail" id="playerThumbnail" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIHZpZXdCb3g9IjAgMCA1NiA1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNCIgZmlsbD0iIzMwMzAzMCIvPgo8cGF0aCBkPSJNMjggMTRWNDJMMzggMjhMMjggMTRaIiBmaWxsPSIjNjY2NjY2Ii8+Cjwvc3ZnPg==" alt="Now Playing">
+        <div class="player-text">
+          <div class="player-title" id="playerTitle">Choose a song</div>
+          <div class="player-artist" id="playerArtist">No artist</div>
         </div>
       </div>
-      <div class="bg-body-secondary">
-        <div class="container d-flex align-items-center justify-content-between py-3">
-          <small class="text-muted">          ©
-          <span id="yr"></span>
-          SpotiDost.
-</small>
-          <div class="small">
-            <a class="link-secondary me-3 text-muted" href="/privacy">            Privacy
-</a>
-            <a class="link-secondary me-3 text-muted" href="/cookies">            Cookies
-</a>
-            <a class="link-secondary me-3 text-muted" href="/terms">            Terms
-</a>
-            <a class="link-secondary text-muted" href="/contact">            Contact
-</a>
+
+      <!-- Controls -->
+      <div class="player-controls">
+        <div class="control-buttons">
+          <button class="control-btn" id="shuffleBtn" title="Shuffle">
+            <i class="icon">shuffle</i>
+          </button>
+          <button class="control-btn" id="prevBtn" title="Previous">
+            <i class="icon">skip_previous</i>
+          </button>
+          <button class="control-btn play-pause-btn" id="playBtn" title="Play">
+            <i class="icon">play_arrow</i>
+          </button>
+          <button class="control-btn" id="nextBtn" title="Next">
+            <i class="icon">skip_next</i>
+          </button>
+          <button class="control-btn" id="repeatBtn" title="Repeat">
+            <i class="icon">repeat</i>
+          </button>
+        </div>
+        
+        <div class="progress-container">
+          <div class="time-label" id="currentTime">0:00</div>
+          <div class="progress-bar-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
           </div>
+          <div class="time-label" id="totalTime">0:00</div>
         </div>
       </div>
-    </footer>
-    <!-- Artist Unsupported -->
-    <div class="modal fade" id="artistModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" style=" font-size: 1rem; ">
-              Artist URLs aren’t supported
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal">
-            </button>
-          </div>
-          <div class="modal-body">
-            Please paste a
-            <b>            single track
-</b>
-            link instead. Open the artist on Spotify, pick a song, and copy its
-            <i>            track
-</i>
-            link.
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" data-bs-dismiss="modal">
-              Close
-            </button>
-            <button id="modalExample" class="btn btn-primary">
-              Use example track
-            </button>
-          </div>
+
+      <!-- Options -->
+      <div class="player-options">
+        <div class="volume-container">
+          <button class="option-btn" title="Mute">
+            <i class="icon">volume_up</i>
+          </button>
+          <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
         </div>
+        
+        <button class="option-btn" id="queueBtn" title="Queue">
+          <i class="icon">queue_music</i>
+        </button>
       </div>
     </div>
-    <!-- Ad Modal (shown before ANY download; renders AdSense on 'shown') -->
-    <div class="modal fade" id="adModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-success-subtle">
-            <h5 class="modal-title" style=" font-size: 1rem; ">
-              Download will start automatically
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            </button>
-          </div>
-          <div class="modal-body">
-            <!-- Ad container: we recreate the <ins> each time to avoid re-push errors -->
-            <div id="adContainer" class="text-center text-muted py-5" style="border:1px dashed var(--bs-border-color);border-radius:.75rem;">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button id="adCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              Close
-            </button>
-          </div>
+  </div>
+
+  <!-- Queue Panel -->
+  <div class="queue-panel" id="queuePanel">
+    <div class="queue-header">
+      <span>Queue</span>
+      <button class="close-queue" id="closeQueue">
+        <i class="icon">close</i>
+      </button>
+    </div>
+    <div class="queue-list" id="queueList"></div>
+  </div>
+
+<script>
+class YouTubeMusicPlayer {
+  constructor() {
+    this.apiBase = "https://jiosavan-api-with-playlist.vercel.app/api/search/songs";
+    this.audio = new Audio();
+    this.queue = [];
+    this.currentIndex = -1;
+    this.isPlaying = false;
+    this.shuffle = false;
+    this.repeat = false;
+    this.queryPool = [
+      // Genres & Styles
+      "Tamil Pop","Tamil Rock","Tamil Indie","Tamil Jazz","Tamil Hip Hop",
+      "Tamil Rap","Tamil Retro","Tamil Classical Fusion","Tamil Folk","Tamil EDM",
+      "Tamil Chill","Tamil Acoustic","Tamil Instrumental","Tamil Lounge","Tamil Lo-fi",
+      "Tamil Trap","Tamil Funk","Tamil Soul","Tamil Blues","Tamil Reggae",
+
+      // Moods & Themes
+      "Tamil Romantic","Tamil Love Songs","Tamil Heartbreak","Tamil Sad Songs","Tamil Happy Songs",
+      "Tamil Party","Tamil Dance","Tamil Energetic","Tamil Chill Vibes","Tamil Motivational",
+      "Tamil Celebration","Tamil Road Trip","Tamil Summer","Tamil Rainy Day","Tamil Night Songs",
+      "Tamil Morning Songs","Tamil Cozy","Tamil Intense","Tamil Emotional","Tamil Uplifting",
+
+      // Era / Period
+      "Tamil 90s Hits","Tamil 2000s Hits","Tamil 2010s Hits","Tamil 80s Hits","Tamil Retro Classics",
+      "Tamil Evergreen Hits","Tamil Golden Era","Tamil Modern Hits","Tamil Contemporary","Tamil Top Charts",
+
+      // Vocal / Artists Focus
+      "Tamil Female Vocal","Tamil Male Vocal","Tamil Duets","Tamil Instrumental","Tamil Acoustic Covers",
+      "Tamil Live Performances","Tamil Remix Songs","Tamil Mashup Songs","Tamil Indie Artists","Tamil Legendary Singers",
+
+      // Film / Media Based
+      "Tamil Movie Hits","Tamil Album Songs","Tamil OST","Tamil TV Songs","Tamil Short Film Songs",
+      "Tamil Music Videos","Tamil Viral Songs","Tamil Trending Songs","Tamil Soundtracks","Tamil Background Scores",
+
+      // Dance & Fitness
+      "Tamil Workout Songs","Tamil Gym Songs","Tamil Dance Party","Tamil Cardio","Tamil Zumba",
+      "Tamil Yoga Music","Tamil Running Songs","Tamil Hip Hop Dance","Tamil Club Songs","Tamil EDM Dance",
+
+      // Nature & Setting
+      "Tamil Beach Vibes","Tamil Road Trip Songs","Tamil Chill Night","Tamil City Life","Tamil Rainy Day Songs",
+      "Tamil Sunset Songs","Tamil Morning Wakeup","Tamil Cozy Home","Tamil Travel Songs","Tamil Night Drive",
+
+      // Misc / Fun
+      "Tamil Guitar Songs","Tamil Piano Songs","Tamil Violin Songs","Tamil Festival Party",
+      "Tamil Mood Booster","Tamil Sad Love","Tamil Emotional Love","Tamil Breakup Songs","Tamil Friendship Songs","Tamil Study Music"
+    ];
+    this.currentQuery = this.queryPool[0];
+    this.page = 0;
+    this.isLoading = false;
+
+    this.initializeElements();
+    this.setupEventListeners();
+    this.setupAudio();
+    this.loadInitialSongs();
+  }
+
+  initializeElements() {
+    this.elements = {
+      musicGrid: document.getElementById('musicGrid'),
+      loading: document.getElementById('loading'),
+      searchInput: document.getElementById('searchInput'),
+      searchBtn: document.getElementById('searchBtn'),
+      sectionTitle: document.getElementById('sectionTitle'),
+      playerThumbnail: document.getElementById('playerThumbnail'),
+      playerTitle: document.getElementById('playerTitle'),
+      playerArtist: document.getElementById('playerArtist'),
+      playBtn: document.getElementById('playBtn'),
+      prevBtn: document.getElementById('prevBtn'),
+      nextBtn: document.getElementById('nextBtn'),
+      shuffleBtn: document.getElementById('shuffleBtn'),
+      repeatBtn: document.getElementById('repeatBtn'),
+      queueBtn: document.getElementById('queueBtn'),
+      progressContainer: document.getElementById('progressContainer'),
+      progressBar: document.getElementById('progressBar'),
+      currentTime: document.getElementById('currentTime'),
+      totalTime: document.getElementById('totalTime'),
+      volumeSlider: document.getElementById('volumeSlider'),
+      queuePanel: document.getElementById('queuePanel'),
+      queueList: document.getElementById('queueList'),
+      closeQueue: document.getElementById('closeQueue')
+    };
+  }
+
+  setupEventListeners() {
+    this.elements.searchBtn.addEventListener('click', () => this.search());
+    this.elements.searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') this.search();
+    });
+
+    this.elements.playBtn.addEventListener('click', () => this.togglePlay());
+    this.elements.prevBtn.addEventListener('click', () => this.previousSong());
+    this.elements.nextBtn.addEventListener('click', () => this.nextSong());
+    this.elements.shuffleBtn.addEventListener('click', () => this.toggleShuffle());
+    this.elements.repeatBtn.addEventListener('click', () => this.toggleRepeat());
+
+    this.elements.queueBtn.addEventListener('click', () => this.toggleQueue());
+    this.elements.closeQueue.addEventListener('click', () => this.closeQueue());
+
+    this.elements.progressContainer.addEventListener('click', (e) => this.seek(e));
+    this.elements.volumeSlider.addEventListener('input', (e) => this.setVolume(e));
+
+    window.addEventListener('scroll', () => this.handleScroll());
+  }
+
+  setupAudio() {
+    this.audio.volume = 0.7;
+    this.audio.addEventListener('timeupdate', () => this.updateProgress());
+    this.audio.addEventListener('ended', () => this.nextSong());
+    this.audio.addEventListener('loadstart', () => this.showLoading());
+    this.audio.addEventListener('canplay', () => this.hideLoading());
+  }
+
+  async loadSongs(reset = false) {
+    if (this.isLoading) return;
+    this.isLoading = true;
+    this.showLoading();
+
+    try {
+      const response = await fetch(`${this.apiBase}?query=${encodeURIComponent(this.currentQuery)}&page=${this.page}&limit=20`);
+      const data = await response.json();
+
+      if (reset) {
+        this.elements.musicGrid.innerHTML = '';
+        this.queue = [];
+        this.currentIndex = -1;
+      }
+
+      if (data.success && data.data.results) {
+        data.data.results.forEach(song => this.addSongToGrid(song));
+        this.updateQueue();
+      }
+    } catch (error) {
+      console.error('Error loading songs:', error);
+    } finally {
+      this.isLoading = false;
+      this.hideLoading();
+    }
+  }
+
+  addSongToGrid(song) {
+    const songData = {
+      name: song.name || 'Unknown Song',
+      artist: song.artists?.primary?.map(a => a.name).join(', ') || 'Unknown Artist',
+      image: song.image?.[song.image.length - 1]?.url || this.getDefaultImage(),
+      audio: song.downloadUrl?.[song.downloadUrl.length - 1]?.url || ''
+    };
+
+    if (!songData.audio) return;
+    this.queue.push(songData);
+
+    const songCard = document.createElement('div');
+    songCard.className = 'song-card';
+    songCard.innerHTML = `
+      <div class="song-image-container">
+        <img class="song-image" src="${songData.image}" alt="${songData.name}" loading="lazy">
+        <div class="play-overlay">
+          <button class="play-overlay-btn">
+            <i class="icon">play_arrow</i>
+          </button>
         </div>
       </div>
-    </div>
-    <script>
-      (function(){const SITE_KEY=&#39;0x4AAAAAAB6y3_RUyJCNsSAu&#39;;const BYPASS_COOKIE=&#39;sd_vf&#39;,BYPASS_MIN=30;let widgetId=null,cachedToken=&#39;&#39;,cachedAt=0;let statusHandler=null;const emit=(m)=&gt;{try{statusHandler&amp;&amp;statusHandler(m)}catch{}};function setCookie(n,v,min){const d=new Date();d.setTime(d.getTime()+min*60*1000);document.cookie=`${encodeURIComponent(n)}=${encodeURIComponent(v)}; expires=${d.toUTCString()}; path=/; samesite=lax`}function getCookie(n){const m=document.cookie.match(new RegExp(&#39;(?:^|; )&#39;+n.replace(/([$?*|{}()[\]\\/+^])/g,&#39;\\$1&#39;)+&#39;=([^;]*)&#39;));return m?decodeURIComponent(m[1]):&#39;&#39;}function hasBypass(){return getCookie(BYPASS_COOKIE)===&#39;1&#39;}function loadTurnstile(){return new Promise((resolve)=&gt;{if(window.turnstile&amp;&amp;window.turnstile.render)return resolve();const s=document.createElement(&#39;script&#39;);s.src=&#39;https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&#39;;s.async=false;s.defer=false;s.onload=()=&gt;resolve();document.head.appendChild(s)})}async function ensureWidget(){await loadTurnstile();return new Promise((resolve)=&gt;{window.turnstile.ready(()=&gt;{if(widgetId!==null)return resolve();let box=document.getElementById(&#39;cf-box&#39;);if(!box){box=document.createElement(&#39;div&#39;);box.id=&#39;cf-box&#39;;box.style.display=&#39;none&#39;;document.body.appendChild(box)}widgetId=window.turnstile.render(&#39;#cf-box&#39;,{sitekey:SITE_KEY,size:&#39;invisible&#39;,callback:(t)=&gt;{cachedToken=t;cachedAt=Date.now()}});resolve()})})}async function getToken(){if(hasBypass()){emit(&#39;bypass&#39;);return&#39;&#39;}const fresh=cachedToken&amp;&amp;(Date.now()-cachedAt)&lt;55000;if(fresh){emit(&#39;reuse&#39;);return cachedToken}await ensureWidget();emit(&#39;verifying&#39;);return new Promise((resolve)=&gt;{try{window.turnstile.execute(widgetId,{callback:(t)=&gt;{cachedToken=t;cachedAt=Date.now();emit(&#39;verified&#39;);resolve(t)}})}catch(e){emit(&#39;verify_error&#39;);resolve(&#39;&#39;)}})}async function bodyWithToken(obj){const p=new URLSearchParams();Object.keys(obj||{}).forEach(k=&gt;p.append(k,obj[k]));const tok=await getToken();if(tok)p.append(&#39;cf-turnstile-response&#39;,tok);return p.toString()}function markBypassFor30m(){setCookie(BYPASS_COOKIE,&#39;1&#39;,BYPASS_MIN)}window.CFGuard={bodyWithToken,markBypassFor30m,hasBypass,setStatusHandler(fn){statusHandler=(typeof fn===&#39;function&#39;)?fn:null}}})();
-    </script>
-    <script src="../assets/js/bootstrap.bundle.min.js">
-    </script>
-    <script>
-      (()=&gt;{
-/* ========= THEME TOGGLE ========= */
-(function(){
-  var KEY=&#39;spoti_theme&#39;;
-  var btns=[document.getElementById(&#39;themeToggle&#39;),document.getElementById(&#39;themeToggleFoot&#39;)].filter(Boolean);
-  var L=document.getElementById(&#39;theme-light&#39;),D=document.getElementById(&#39;theme-dark&#39;);
+      <div class="song-info">
+        <div class="song-title">${songData.name}</div>
+        <div class="song-artist">${songData.artist}</div>
+      </div>
+    `;
 
-  function applyTheme(t){
-    document.documentElement.setAttribute(&#39;data-bs-theme&#39;,t);
-    try{localStorage.setItem(KEY,t);}catch(e){}
-    document.cookie=&#39;theme=&#39;+t+&#39;; Max-Age=31536000; Path=/; SameSite=Lax&#39;;
-    if(L&amp;&amp;D){L.media=(t===&#39;light&#39;)?&#39;all&#39;:&#39;not all&#39;;D.media=(t===&#39;dark&#39;)?&#39;all&#39;:&#39;not all&#39;;}
-    btns.forEach(function(b){b.textContent=(t===&#39;dark&#39;)?&#39;☀️&#39;:&#39;🌙&#39;;});
-  }
-
-  var current=document.documentElement.getAttribute(&#39;data-bs-theme&#39;)||&#39;light&#39;;
-  btns.forEach(function(b){b.textContent=(current===&#39;dark&#39;)?&#39;☀️&#39;:&#39;🌙&#39;;});
-
-  btns.forEach(function(b){
-    b.addEventListener(&#39;click&#39;,function(){
-      var cur=document.documentElement.getAttribute(&#39;data-bs-theme&#39;)===&#39;dark&#39;?&#39;dark&#39;:&#39;light&#39;;
-      applyTheme(cur===&#39;dark&#39;?&#39;light&#39;:&#39;dark&#39;);
+    songCard.addEventListener('click', () => {
+      this.currentIndex = this.queue.indexOf(songData);
+      this.playSong();
     });
-  });
 
-  var yr=document.getElementById(&#39;yr&#39;);
-  if(yr) yr.textContent=(new Date()).getFullYear();
-})();
-
-/* ========= DOM HOOKS ========= */
-const frm=document.getElementById(&#39;frm&#39;),
-      inp=document.getElementById(&#39;inpUrl&#39;),
-      btnFetch=document.getElementById(&#39;btnFetch&#39;);
-const inputSection=document.getElementById(&#39;inputSection&#39;),
-      statusStrip=document.getElementById(&#39;statusStrip&#39;),
-      statusText=document.getElementById(&#39;statusText&#39;);
-const resultsSection=document.getElementById(&#39;resultsSection&#39;),
-      resultsSkeleton=document.getElementById(&#39;resultsSkeleton&#39;),
-      trackCard=document.getElementById(&#39;trackCard&#39;),
-      tableSection=document.getElementById(&#39;tableSection&#39;);
-const tableBody=document.getElementById(&#39;resultsTableBody&#39;),
-      tableHeading=document.getElementById(&#39;tableHeading&#39;),
-      inputEcho=document.getElementById(&#39;inputEcho&#39;);
-const trackImg=document.getElementById(&#39;trackImg&#39;),
-      trackTitle=document.getElementById(&#39;trackTitle&#39;),
-      trackArtists=document.getElementById(&#39;trackArtists&#39;),
-      trackSource=document.getElementById(&#39;trackSource&#39;);
-const trackDownloadBtn=document.getElementById(&#39;trackDownloadBtn&#39;);
-const againBtnTrack=document.getElementById(&#39;againBtnTrack&#39;),
-      againBtnTable=document.getElementById(&#39;againBtnTable&#39;);
-const artistModal=(()=&gt;{const el=document.getElementById(&#39;artistModal&#39;);return el?new bootstrap.Modal(el):null;})();
-const modalExample=document.getElementById(&#39;modalExample&#39;);
-const adModalEl=document.getElementById(&#39;adModal&#39;),
-      adModal=adModalEl?new bootstrap.Modal(adModalEl,{backdrop:&#39;static&#39;,keyboard:false}):null,
-      adContainer=document.getElementById(&#39;adContainer&#39;);
-
-let currentKind=null,firstItemShown=false,pendingHref=null;
-
-/* ========= SKELETON HELPERS ========= */
-let skeletonShown=false;
-function showSkeleton(){
-  if(skeletonShown) return;
-  skeletonShown=true;
-  resultsSection?.classList.remove(&#39;d-none&#39;);
-  resultsSkeleton?.classList.remove(&#39;d-none&#39;);
-  resultsSkeleton?.setAttribute(&#39;aria-busy&#39;,&#39;true&#39;);
-  trackCard?.classList.add(&#39;d-none&#39;);
-  tableSection?.classList.add(&#39;d-none&#39;);
-}
-function hideSkeleton(){
-  skeletonShown=false;
-  resultsSkeleton?.classList.add(&#39;d-none&#39;);
-  resultsSkeleton?.setAttribute(&#39;aria-busy&#39;,&#39;false&#39;);
-}
-
-/* ========= STATUS ========= */
-function showStatus(txt){
-  if(statusText) statusText.textContent=txt;
-  if(statusStrip) statusStrip.style.display=&#39;block&#39;;
-}
-const statusPrefixFor=k=&gt;k===&#39;track&#39;?&#39;Extracting track…&#39;:&#39;Extracting tracks…&#39;;
-function showProgress(done,total){
-  const pct=Math.max(1,Math.min(100,total&gt;0?Math.round((done/total)*100):1));
-  const range=total&gt;0?` ${done}/${total} `:&#39; &#39;;
-  showStatus(`${statusPrefixFor(currentKind)}${range}(${pct}%)`);
-}
-if(window.CFGuard&amp;&amp;typeof CFGuard.setStatusHandler===&#39;function&#39;){
-  CFGuard.setStatusHandler((phase)=&gt;{
-    if(phase===&#39;verifying&#39;) showStatus(&#39;Verification pending&#39;);
-    else if(phase===&#39;verified&#39;) showStatus(&#39;Verification done.&#39;);
-    else if(phase===&#39;reuse&#39;) showStatus(&#39;Verified recently. Preparing extraction… (1%)&#39;);
-    else if(phase===&#39;bypass&#39;) showStatus(&#39;Trusted session. Preparing extraction… (1%)&#39;);
-    else if(phase===&#39;verify_error&#39;) showStatus(&#39;Verification failed. Please try again.&#39;);
-  });
-}
-
-/* ========= URL HELPERS ========= */
-const EXPAND_API=&#39;/expand.php&#39;;
-const SHORT_HOST_RE=/^(spoti\.fi|spotify\.link)$/i;
-function normalize(u){
-  let s=(u||&#39;&#39;).trim();
-  if(!s) return s;
-  if(/^(open\.spotify\.com|spotify\.link|spoti\.fi)\b/i.test(s)) s=&#39;https://&#39;+s;
-  return s;
-}
-function stripParams(u){try{const x=new URL(u);return x.origin+x.pathname;}catch{return String(u||&#39;&#39;).split(&#39;?&#39;)[0];}}
-function isShortLike(u){try{const h=new URL(u.startsWith(&#39;http&#39;)?u:&#39;https://&#39;+u).hostname;return SHORT_HOST_RE.test(h);}catch{return false;}}
-async function expandIfNeeded(u){
-  const n=normalize(u);
-  if(isShortLike(n)){
-    const res=await fetch(`${EXPAND_API}?url=${encodeURIComponent(n)}`);
-    if(res.ok){const data=await res.json().catch(()=&gt;null);if(data&amp;&amp;data.expanded) return stripParams(data.expanded);}
+    this.elements.musicGrid.appendChild(songCard);
   }
-  return stripParams(n);
-}
-function parseKind(raw){
-  try{
-    const u=new URL(raw.startsWith(&#39;http&#39;)?raw:&#39;https://&#39;+raw);
-    if(!/\.spotify\.com$/i.test(u.hostname)) return null;
-    const parts=u.pathname.split(&#39;/&#39;).filter(Boolean);let i=0;
-    if(parts[i]&amp;&amp;/^intl-[a-z]{2}(?:-[a-z]{2})?$/i.test(parts[i])) i++;
-    let k=(parts[i]||&#39;&#39;).toLowerCase();if(k===&#39;embed&#39;){i++;k=(parts[i]||&#39;&#39;).toLowerCase();}
-    return [&#39;track&#39;,&#39;album&#39;,&#39;playlist&#39;,&#39;artist&#39;].includes(k)?k:null;
-  }catch{return null;}
-}
 
-/* ========= SSE HELPER ========= */
-function handleSSE(stream,onEvent){
-  const r=stream.getReader(),d=new TextDecoder(&#39;utf-8&#39;);let buf=&#39;&#39;;
-  function pump(){
-    return r.read().then(({value,done})=&gt;{
-      if(done) return;
-      buf+=d.decode(value,{stream:!0});
-      const chunks=buf.split(/\r?\n\r?\n/);buf=chunks.pop()??&#39;&#39;;
-      for(const c of chunks){
-        let ev=&#39;message&#39;,data=[];
-        for(const line of c.split(/\r?\n/)){
-          if(line.startsWith(&#39;event:&#39;)) ev=line.slice(6).trim();
-          else if(line.startsWith(&#39;data:&#39;)) data.push(line.slice(5).trim());
-        }
-        onEvent(ev,data.join(&#39;\n&#39;));
-      }
-      return pump();
-    });
+  playSong() {
+    if (this.currentIndex < 0 || this.currentIndex >= this.queue.length) return;
+    const song = this.queue[this.currentIndex];
+    this.elements.playerThumbnail.src = song.image;
+    this.elements.playerTitle.textContent = song.name;
+    this.elements.playerArtist.textContent = song.artist;
+    this.audio.src = song.audio;
+    this.audio.play();
+    this.isPlaying = true;
+    this.updatePlayButton();
+    this.updateQueue();
   }
-  return pump();
-}
 
-/* ========= MAIN POST ========= */
-async function startPOST(kind,rawUrl){
-  currentKind=kind;if(btnFetch) btnFetch.disabled=true;
-  if(inputSection) inputSection.classList.add(&#39;d-none&#39;);
-  showStatus(`Starting… (${kind})`);
-  try{
-    const body=window.CFGuard&amp;&amp;CFGuard.bodyWithToken?await CFGuard.bodyWithToken({type:kind,url:rawUrl}):new URLSearchParams({type:kind,url:rawUrl}).toString();
-    const resp=await fetch(&#39;batch.php&#39;,{method:&#39;POST&#39;,headers:{&#39;Content-Type&#39;:&#39;application/x-www-form-urlencoded&#39;},body});
-    if(!resp.ok||!resp.body) throw new Error(`HTTP ${resp.status}`);
-
-    showStatus(`${statusPrefixFor(kind)} (1%)`);
-
-    await handleSSE(resp.body,(event,data)=&gt;{
-      if(!data) return;
-
-      if(event===&#39;start&#39;){
-        showStatus(`${statusPrefixFor(kind)} (1%)`);
-      }else if(event===&#39;progress&#39;){
-        const p=JSON.parse(data||&#39;{}&#39;);
-        if(p&amp;&amp;typeof p.done===&#39;number&#39;&amp;&amp;typeof p.total===&#39;number&#39;) showProgress(p.done,p.total);
-        else showStatus(`${statusPrefixFor(kind)} (1%)`);
-      }else if(event===&#39;item&#39;){
-        const obj=JSON.parse(data||&#39;null&#39;);
-
-        // First real render: hide skeleton, show the right UI
-        if(!firstItemShown){
-          firstItemShown=true;
-          hideSkeleton();
-          resultsSection&amp;&amp;resultsSection.classList.remove(&#39;d-none&#39;);
-          if(kind===&#39;track&#39;){
-            trackCard&amp;&amp;trackCard.classList.remove(&#39;d-none&#39;);
-            tableSection&amp;&amp;tableSection.classList.add(&#39;d-none&#39;);
-          }else{
-            tableSection&amp;&amp;tableSection.classList.remove(&#39;d-none&#39;);
-            trackCard&amp;&amp;trackCard.classList.add(&#39;d-none&#39;);
-            if(tableHeading) tableHeading.textContent=(kind===&#39;album&#39;)?&#39;Album Tracks&#39;:&#39;Playlist Tracks&#39;;
-            if(inputEcho){inputEcho.textContent=rawUrl;inputEcho.style.display=&#39;inline&#39;;}
-          }
-        }
-
-        if(obj&amp;&amp;!obj.error){
-          const name=obj.name||obj.title||&#39;Track&#39;,artists=obj.artists||obj.artist||&#39;&#39;;
-          if(kind===&#39;track&#39;){
-            if(trackImg) trackImg.src=(obj.thumb||obj.thumbnail||obj.img||&#39;https://placehold.co/84x84?font=poppins&amp;text=Artwork&#39;);
-            if(trackTitle) trackTitle.textContent=name;
-            if(trackArtists){trackArtists.textContent=Array.isArray(artists)?artists.join(&#39;, &#39;):(artists||&#39;&#39;);trackArtists.style.display=trackArtists.textContent?&#39;block&#39;:&#39;none&#39;;}
-            if(trackDownloadBtn) trackDownloadBtn.dataset.href=obj.url;
-            if(trackSource){trackSource.textContent=obj.source?`[${obj.source}]`:&#39;&#39;;trackSource.style.display=&#39;none&#39;;}
-          }else{
-            const tr=document.createElement(&#39;tr&#39;);
-            const tdT=document.createElement(&#39;td&#39;);tdT.textContent=name;
-            const tdA=document.createElement(&#39;td&#39;);tdA.className=&#39;text-end&#39;;
-            const b=document.createElement(&#39;button&#39;);b.type=&#39;button&#39;;b.className=&#39;btn-download&#39;;b.textContent=&#39;Download MP3&#39;;b.dataset.href=obj.url;
-            tdA.appendChild(b);tr.appendChild(tdT);tr.appendChild(tdA);tableBody&amp;&amp;tableBody.appendChild(tr);
-          }
-        }else{
-          if(kind===&#39;track&#39;){
-            const al=document.createElement(&#39;div&#39;);al.className=&#39;alert alert-danger mt-3&#39;;al.textContent=`❌ ${(obj&amp;&amp;(obj.url||&#39;&#39;))} - ${(obj&amp;&amp;obj.error)||&#39;error&#39;}`;resultsSection&amp;&amp;resultsSection.prepend(al);
-          }else{
-            const tr=document.createElement(&#39;tr&#39;),td=document.createElement(&#39;td&#39;);td.colSpan=2;td.className=&#39;text-danger&#39;;td.textContent=`❌ ${(obj&amp;&amp;(obj.url||&#39;&#39;))} - ${(obj&amp;&amp;obj.error)||&#39;error&#39;}`;tr.appendChild(td);tableBody&amp;&amp;tableBody.appendChild(tr);
-          }
-        }
-      }else if(event===&#39;done&#39;){
-        hideSkeleton();
-        showStatus(&#39;Done.&#39;);
-        if(btnFetch) btnFetch.disabled=false;
-      }else if(event===&#39;error&#39;){
-        hideSkeleton();
-        const e=JSON.parse(data||&#39;null&#39;);
-        showStatus((e&amp;&amp;e.msg)?e.msg:&#39;Error&#39;);
-        if(btnFetch) btnFetch.disabled=false;
-      }
-    });
-  }catch(err){
-    hideSkeleton();
-    showStatus(`Connection error: ${err.message||err}`);
-    if(btnFetch) btnFetch.disabled=false;
-  }
-}
-
-/* ========= FORM SUBMIT ========= */
-frm&amp;&amp;frm.addEventListener(&#39;submit&#39;,async(e)=&gt;{
-  e.preventDefault();
-  firstItemShown=false;
-  tableBody&amp;&amp;(tableBody.innerHTML=&#39;&#39;);
-  trackImg&amp;&amp;(trackImg.src=&#39;&#39;);
-  trackTitle&amp;&amp;(trackTitle.textContent=&#39;Track Title&#39;);
-  trackArtists&amp;&amp;(trackArtists.textContent=&#39;&#39;,trackArtists.style.display=&#39;none&#39;);
-  resultsSection&amp;&amp;resultsSection.classList.add(&#39;d-none&#39;);
-  if(btnFetch) btnFetch.disabled=true;
-
-  let raw=(inp?.value||&#39;&#39;).trim();
-  if(!raw){showStatus(&#39;Please enter a Spotify URL.&#39;);btnFetch&amp;&amp;(btnFetch.disabled=false);return;}
-
-  showStatus(&#39;Checking link…&#39;);
-  showSkeleton(); // display skeleton immediately
-
-  try{
-    const expanded=await expandIfNeeded(raw);
-    if(inp) inp.value=expanded;
-    const kind=parseKind(expanded);
-    if(!kind){hideSkeleton();showStatus(&#39;Please enter a valid Spotify URL (track/album/playlist).&#39;);btnFetch&amp;&amp;(btnFetch.disabled=false);return;}
-    if(kind===&#39;artist&#39;){hideSkeleton();artistModal&amp;&amp;artistModal.show();btnFetch&amp;&amp;(btnFetch.disabled=false);return;}
-    await startPOST(kind,expanded);
-  }catch(err){
-    hideSkeleton();
-    console.error(err);showStatus(`Error: ${err.message||err}`);btnFetch&amp;&amp;(btnFetch.disabled=false);
-  }
-});
-
-/* ========= VALIDATION UI ========= */
-const SPOTIFY_RE=/^https?:\/\/open\.spotify\.com\/(?:intl-[A-Za-z-]+\/)?(?:embed\/)?(track|album|playlist)\/[A-Za-z0-9]+(?:\?.*)?$/i;
-const SHORT_RE=/^https?:\/\/(?:spoti\.fi|spotify\.link)\/[A-Za-z0-9._~-]+(?:\?.*)?$/i;
-function setValidity(ok){if(!inp) return;inp.classList.remove(&#39;is-valid&#39;,&#39;is-invalid&#39;);inp.value.trim()&amp;&amp;inp.classList.add(ok?&#39;is-valid&#39;:&#39;is-invalid&#39;);}
-function validate(v){const n=normalize(v);const base=stripParams(n);const ok=SPOTIFY_RE.test(base)||SHORT_RE.test(base);setValidity(ok);return ok;}
-if(inp){[&#39;input&#39;,&#39;blur&#39;].forEach(ev=&gt;inp.addEventListener(ev,()=&gt;validate(inp.value)));}
-
-/* ========= AGAIN BUTTONS ========= */
-const reloadCurrentPage=()=&gt;{window.location.assign(window.location.href);};
-againBtnTrack&amp;&amp;againBtnTrack.addEventListener(&#39;click&#39;,reloadCurrentPage);
-againBtnTable&amp;&amp;againBtnTable.addEventListener(&#39;click&#39;,reloadCurrentPage);
-
-/* ========= AD MODAL ========= */
-if(adModalEl){
-  adModalEl.addEventListener(&#39;shown.bs.modal&#39;,()=&gt;{
-    if(adContainer){
-      adContainer.innerHTML=&#39;&#39;;
-      const ins=document.createElement(&#39;ins&#39;);
-      ins.className=&#39;adsbygoogle&#39;;ins.style.display=&#39;block&#39;;
-      ins.setAttribute(&#39;data-ad-client&#39;,&#39;ca-pub-2309738042229483&#39;);
-      ins.setAttribute(&#39;data-ad-slot&#39;,&#39;5705177882&#39;);
-      ins.setAttribute(&#39;data-ad-format&#39;,&#39;auto&#39;);
-      ins.setAttribute(&#39;data-full-width-responsive&#39;,&#39;true&#39;);
-      adContainer.appendChild(ins);
-      try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+  togglePlay() {
+    if (this.currentIndex === -1 && this.queue.length > 0) {
+      this.currentIndex = 0;
+      this.playSong();
+      return;
     }
-    if(pendingHref){setTimeout(()=&gt;{window.location.href=pendingHref;},300);}
-  });
-  adModalEl.addEventListener(&#39;hidden.bs.modal&#39;,()=&gt;{if(adContainer) adContainer.innerHTML=&#39;&#39;;pendingHref=null;});
-}
-trackDownloadBtn&amp;&amp;trackDownloadBtn.addEventListener(&#39;click&#39;,()=&gt;{
-  if(!trackDownloadBtn.dataset.href) return;
-  pendingHref=trackDownloadBtn.dataset.href;adModal&amp;&amp;adModal.show();
-});
-tableBody&amp;&amp;tableBody.addEventListener(&#39;click&#39;,e=&gt;{
-  const btn=e.target.closest(&#39;button[data-href]&#39;);if(!btn) return;
-  e.preventDefault();pendingHref=btn.dataset.href;adModal&amp;&amp;adModal.show();
-});
-
-/* ========= STATUS PILL ========= */
-const hueFromPercent=pct=&gt;Math.round(Math.max(0,Math.min(100,pct))*1.2);
-const derivePercentFromText=t=&gt;{const m=String(t||&#39;&#39;).trim().match(/\((\d{1,3})%\)/);if(m) return Math.min(100,Math.max(0,+m[1]));return /^done\.?$/i.test(t||&#39;&#39;)?100:0;};
-function refreshPill(pill){
-  const label=pill.querySelector(&#39;.status-label&#39;)||pill;
-  const text=(label.textContent||&#39;&#39;).trim();
-  const pct=derivePercentFromText(text);
-  pill.style.setProperty(&#39;--pct&#39;,pct);
-  pill.style.setProperty(&#39;--h&#39;,hueFromPercent(pct));
-  const isDone=pct&gt;=100||/^done\.?$/i.test(text);
-  const isSuccessPhrase=/(verification\s*done|verified|ready)/i.test(text);
-  const hasPercent=/\(\d{1,3}%\)/.test(text);
-  pill.classList.toggle(&#39;is-success&#39;,isSuccessPhrase&amp;&amp;!hasPercent&amp;&amp;!isDone);
-  pill.classList.toggle(&#39;is-done&#39;,isDone);
-  if(isDone){pill.dataset.locked=&#39;1&#39;;if(!/done/i.test(text)||!text) label.textContent=&#39;Done.&#39;;}
-}
-document.querySelectorAll(&#39;.status-pill&#39;).forEach(pill=&gt;{
-  refreshPill(pill);
-  const mo=new MutationObserver(()=&gt;{
-    if(pill.dataset.locked===&#39;1&#39;){
-      const label=pill.querySelector(&#39;.status-label&#39;)||pill;
-      if(!label.textContent.trim()) label.textContent=&#39;Done.&#39;;
-      pill.style.setProperty(&#39;--pct&#39;,100);pill.classList.add(&#39;is-done&#39;);return;
-    }
-    refreshPill(pill);
-  });
-  mo.observe(pill,{childList:!0,characterData:!0,subtree:!0});
-});
-window.setStatus=(sel,a,b)=&gt;{
-  const pill=sel instanceof Element?sel:document.querySelector(sel);if(!pill) return;
-  const label=pill.querySelector(&#39;.status-label&#39;)||pill;
-  if(typeof a===&#39;string&#39;) label.textContent=a;
-  else{const pct=Math.round(a/b*100);label.textContent=`${statusPrefixFor(currentKind)} ${a}/${b} (${pct}%)`;}
-};
-
-/* ========= CLEAN TITLES ========= */
-(()=&gt;{
-  const stripBrand=s=&gt;String(s||&#39;&#39;).replace(/(?:\s*[-_]\s*)?SpotiDost\b/gi,&#39;&#39;).replace(/\s{2,}/g,&#39; &#39;).replace(/\s*[-_]\s*$/,&#39;&#39;).trim();
-  const table=document.querySelector(&#39;#resultsTableBody&#39;);
-  const polishRow=tr=&gt;{const td=tr.querySelector(&#39;td:first-child&#39;);if(!td) return;const before=td.textContent,after=stripBrand(before);if(after!==before) td.textContent=after;};
-  if(table){
-    table.querySelectorAll(&#39;tr&#39;).forEach(polishRow);
-    new MutationObserver(list=&gt;{list.forEach(m=&gt;{m.addedNodes.forEach(n=&gt;{if(n.nodeType!==1) return;if(n.matches(&#39;tr&#39;)) polishRow(n);n.querySelectorAll?.(&#39;tr&#39;).forEach(polishRow);});});}).observe(table,{childList:!0,subtree:!0,characterData:!0});
+    this.isPlaying ? this.audio.pause() : this.audio.play();
+    this.isPlaying = !this.isPlaying;
+    this.updatePlayButton();
   }
-  const titleEl=document.getElementById(&#39;trackTitle&#39;);const fixOne=el=&gt;{if(!el) return;const v=el.textContent||&#39;&#39;,w=stripBrand(v);if(w!==v) el.textContent=w;};
-  fixOne(titleEl);titleEl&amp;&amp;new MutationObserver(()=&gt;fixOne(titleEl)).observe(titleEl,{childList:!0,characterData:!0,subtree:!0});
-})();
 
-/* ========= ARTIST MODAL EXAMPLE ========= */
-modalExample&amp;&amp;modalExample.addEventListener(&#39;click&#39;,()=&gt;{
-  if(inp) inp.value=&#39;https://open.spotify.com/track/7FLVm1D9aP231Da7F2p6zs&#39;;
-  const mEl=document.getElementById(&#39;artistModal&#39;);mEl&amp;&amp;bootstrap.Modal.getInstance(mEl)?.hide();inp&amp;&amp;inp.focus();
-});
+  nextSong() {
+    if (this.queue.length === 0) return;
+    this.currentIndex = this.shuffle
+      ? Math.floor(Math.random() * this.queue.length)
+      : this.currentIndex + 1;
 
-})();
-    </script>
-    <script>
-      (function(){
-  const SELECTOR=&#39;.sharethis-inline-share-buttons .st-btn&#39;;
-  function forceShow(root=document){
-    root.querySelectorAll(SELECTOR).forEach(el=&gt;{el.style.display=&#39;inline-block&#39;;});
-  }
-  function start(){
-    forceShow();
-    const container=document.querySelector(&#39;.sharethis-inline-share-buttons&#39;)||document.body;
-    const observer=new MutationObserver(mutations=&gt;{
-      let needsPass=false;
-      for(const m of mutations){
-        if(m.type===&#39;attributes&#39;&amp;&amp;m.target.matches?.(SELECTOR)){
-          if(m.target.style.display===&#39;none&#39;) m.target.style.display=&#39;inline-block&#39;;
-        }
-        if(m.addedNodes&amp;&amp;m.addedNodes.length) needsPass=true;
+    if (this.currentIndex >= this.queue.length) {
+      if (this.repeat) {
+        this.currentIndex = 0;
+      } else {
+        this.page++;
+        // Pick a random query from the pool for the next scroll
+        this.currentQuery = this.queryPool[Math.floor(Math.random() * this.queryPool.length)];
+        this.loadSongs();
+        this.currentIndex = this.queue.length - 1;
       }
-      if(needsPass) forceShow(container);
-    });
-    observer.observe(container,{childList:true,subtree:true,attributes:true,attributeFilter:[&#39;style&#39;,&#39;class&#39;]});
+    }
+    this.playSong();
   }
-  document.readyState===&#39;loading&#39;?document.addEventListener(&#39;DOMContentLoaded&#39;,start):start();
-})();
-    </script>
-  </body>
+
+  previousSong() {
+    if (this.queue.length === 0) return;
+    this.currentIndex--;
+    if (this.currentIndex < 0) this.currentIndex = this.repeat ? this.queue.length - 1 : 0;
+    this.playSong();
+  }
+
+  toggleShuffle() {
+    this.shuffle = !this.shuffle;
+    this.elements.shuffleBtn.classList.toggle('active', this.shuffle);
+  }
+
+  toggleRepeat() {
+    this.repeat = !this.repeat;
+    this.elements.repeatBtn.classList.toggle('active', this.repeat);
+  }
+
+  toggleQueue() {
+    this.elements.queuePanel.classList.add('active');
+    this.elements.queueBtn.classList.add('active');
+  }
+
+  closeQueue() {
+    this.elements.queuePanel.classList.remove('active');
+    this.elements.queueBtn.classList.remove('active');
+  }
+
+  search() {
+    const query = this.elements.searchInput.value.trim();
+    if (!query) return;
+    this.currentQuery = query;
+    this.elements.sectionTitle.textContent = `Search results for "${query}"`;
+    this.page = 0;
+    this.loadSongs(true);
+  }
+
+  updateProgress() {
+    if (this.audio.duration) {
+      const progress = (this.audio.currentTime / this.audio.duration) * 100;
+      this.elements.progressBar.style.width = `${progress}%`;
+      this.elements.currentTime.textContent = this.formatTime(this.audio.currentTime);
+      this.elements.totalTime.textContent = this.formatTime(this.audio.duration);
+    }
+  }
+
+  seek(e) {
+    if (this.audio.duration) {
+      const rect = this.elements.progressContainer.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      this.audio.currentTime = pos * this.audio.duration;
+    }
+  }
+
+  setVolume(e) {
+    this.audio.volume = e.target.value;
+  }
+
+  updatePlayButton() {
+    const icon = this.elements.playBtn.querySelector('i');
+    icon.textContent = this.isPlaying ? 'pause' : 'play_arrow';
+  }
+
+  updateQueue() {
+    this.elements.queueList.innerHTML = '';
+    this.queue.forEach((song, index) => {
+      const queueItem = document.createElement('div');
+      queueItem.className = `queue-item ${index === this.currentIndex ? 'playing' : ''}`;
+      queueItem.innerHTML = `
+        <img class="queue-thumbnail" src="${song.image}" alt="${song.name}">
+        <div class="queue-info">
+          <div class="queue-title">${song.name}</div>
+          <div class="queue-artist">${song.artist}</div>
+        </div>
+      `;
+      queueItem.addEventListener('click', () => {
+        this.currentIndex = index;
+        this.playSong();
+      });
+      this.elements.queueList.appendChild(queueItem);
+    });
+  }
+
+  formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  handleScroll() {
+    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 1000)) {
+      this.page++;
+      // Pick a random query on scroll
+      this.currentQuery = this.queryPool[Math.floor(Math.random() * this.queryPool.length)];
+      this.loadSongs();
+    }
+  }
+
+  showLoading() { this.elements.loading.style.display = 'block'; }
+  hideLoading() { this.elements.loading.style.display = 'none'; }
+  getDefaultImage() {
+    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMzAzMDMwIi8+CjxwYXRoIGQ9Ik0xMDAgNjBMMTQwIDEwMEwxMDAgMTQwTDYwIDEwMEwxMDAgNjBaIiBmaWxsPSIjNjY2NjY2Ii8+Cjwvc3ZnPg==";
+  }
+
+  async loadInitialSongs() { await this.loadSongs(true); }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  new YouTubeMusicPlayer();
+});
+</script>
+
+</body>
 </html>
