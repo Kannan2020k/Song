@@ -3,121 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Music Player</title>
+<title>Music Player with Download</title>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Roboto',sans-serif;
-  background:#0f0f0f;
-  color:#fff;
-  transition:0.3s;
-}
-
-/* LIGHT MODE */
+body{font-family:'Roboto',sans-serif;background:#0f0f0f;color:#fff;transition:0.3s;}
 body.light{background:#f5f5f5;color:#000}
-body.light .header,
-body.light .player{background:#fff;border-color:#ddd}
+body.light .header, body.light .player{background:#fff;border-color:#ddd}
 body.light .search-box{background:#eee}
 
 /* HEADER */
-.header{
-  background:#212121;
-  padding:16px;
-  position:sticky;
-  top:0;
-  border-bottom:1px solid #303030;
-}
-.header-content{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
+.header{background:#212121;padding:16px;position:sticky;top:0;border-bottom:1px solid #303030;}
+.header-content{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;}
 .logo{display:flex;align-items:center;gap:10px;font-size:20px}
-.logo-icon{
-  width:32px;height:32px;background:#ff0000;
-  border-radius:50%;display:flex;align-items:center;justify-content:center;
-}
+.logo-icon{width:32px;height:32px;background:#ff0000;border-radius:50%;display:flex;align-items:center;justify-content:center}
 
-/* SEARCH SECTION */
+/* SEARCH & THEME */
 .search-section{display:flex;align-items:center;gap:10px}
-.search-box{
-  display:flex;border:1px solid #303030;
-  border-radius:25px;overflow:hidden;background:#121212;
-}
-.search-input{
-  padding:8px 12px;border:none;background:transparent;
-  color:inherit;outline:none;width:180px;
-}
-.search-btn{
-  background:#303030;border:none;padding:8px 12px;
-  cursor:pointer;color:#fff;
-}
+.search-box{display:flex;border:1px solid #303030;border-radius:25px;overflow:hidden;background:#121212;}
+.search-input{padding:8px 12px;border:none;background:transparent;color:inherit;outline:none;width:180px;}
+.search-btn{background:#303030;border:none;padding:8px 12px;cursor:pointer;color:#fff;}
 .language-select{padding:8px;border-radius:20px;border:none}
-
-/* THEME */
 .theme-toggle{background:none;border:none;color:inherit;font-size:22px;cursor:pointer}
 
-/* MAIN */
-.main{max-width:1200px;margin:auto;padding:20px;padding-bottom:140px}
-.music-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:15px;
-}
-
-/* SONG CARD ANIMATION */
-.song-card{
-  cursor:pointer;
-  animation:fadeIn 0.4s ease;
-  transition:transform 0.2s;
-}
-.song-card:hover{transform:scale(1.05)}
-.song-card img{
-  width:100%;aspect-ratio:1;
-  object-fit:cover;border-radius:8px;
-}
+/* MAIN GRID */
+.main{max-width:1200px;margin:auto;padding:20px;padding-bottom:180px}
+.music-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px;}
+.song-card{cursor:pointer;animation:fadeIn 0.4s ease;transition:transform 0.2s;}
+.song-card:hover{transform:scale(1.05);}
+.song-card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;}
 .song-title{font-size:14px}
 .song-artist{font-size:12px;color:gray}
+.download-btn{margin-top:5px;background:#ff0000;color:#fff;border:none;padding:5px 8px;border-radius:4px;cursor:pointer;font-size:12px;width:100%;}
 
 /* PLAYER */
-.player{
-  position:fixed;bottom:0;left:0;right:0;
-  background:#212121;border-top:1px solid #303030;
-  padding:10px;
-}
-.player-content{
-  max-width:1200px;margin:auto;
-  display:grid;grid-template-columns:1fr 2fr 1fr;
-  align-items:center;
-}
+.player{position:fixed;bottom:0;left:0;right:0;background:#212121;border-top:1px solid #303030;padding:10px;}
+.player-content{max-width:1200px;margin:auto;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;gap:10px;}
 .player-info{display:flex;gap:10px;align-items:center}
 .player-info img{width:50px;height:50px;border-radius:5px}
 .controls{display:flex;flex-direction:column;align-items:center}
 .control-buttons{display:flex;gap:10px}
 .control-btn{background:none;border:none;color:inherit;font-size:22px;cursor:pointer}
-.play-btn{
-  background:#fff;color:#000;border-radius:50%;
-  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
-}
+.play-btn{background:#fff;color:#000;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
 .progress{display:flex;align-items:center;gap:5px;width:100%}
 .progress input{flex:1}
-
-/* VOLUME */
 .volume-container{display:flex;align-items:center;gap:5px}
 .volume-container input{width:100px}
+.download-all{margin-top:10px;padding:5px 10px;border:none;border-radius:5px;background:#0f0;color:#000;cursor:pointer;font-weight:bold}
 
 /* ANIMATION */
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:translateY(0)}
-}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 
@@ -125,34 +63,26 @@ body.light .search-box{background:#eee}
 
 <div class="header">
   <div class="header-content">
-    <div class="logo">
-      <div class="logo-icon"><i class="material-icons">music_note</i></div>
-      Music Player
-    </div>
-
+    <div class="logo"><div class="logo-icon"><i class="material-icons">music_note</i></div>Music Player</div>
     <div class="search-section">
       <select id="languageSelect" class="language-select">
         <option value="Tamil">Tamil</option>
         <option value="Hindi">Hindi</option>
         <option value="English">English</option>
       </select>
-
       <div class="search-box">
         <input type="text" id="searchInput" class="search-input" placeholder="Search songs">
-        <button class="search-btn" id="searchBtn">
-          <i class="material-icons">search</i>
-        </button>
+        <button class="search-btn" id="searchBtn"><i class="material-icons">search</i></button>
       </div>
-
-      <button class="theme-toggle" id="themeToggle">
-        <i class="material-icons">dark_mode</i>
-      </button>
+      <button class="theme-toggle" id="themeToggle"><i class="material-icons">dark_mode</i></button>
     </div>
   </div>
 </div>
 
 <div class="main">
   <div class="music-grid" id="musicGrid"></div>
+  <div id="noResults" style="text-align:center;margin-top:20px;color:#f00;display:none;">No songs found.</div>
+  <button class="download-all" id="downloadAllBtn">Download All Songs</button>
 </div>
 
 <div class="player">
@@ -176,13 +106,11 @@ body.light .search-box{background:#eee}
         <input type="range" id="progressBar" value="0" min="0" max="100">
         <span id="duration">0:00</span>
       </div>
+      <div class="volume-container">
+        <i class="material-icons">volume_up</i>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+      </div>
     </div>
-
-    <div class="volume-container">
-      <i class="material-icons">volume_up</i>
-      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
-    </div>
-
   </div>
 </div>
 
@@ -205,46 +133,46 @@ const searchBtn=document.getElementById("searchBtn");
 const languageSelect=document.getElementById("languageSelect");
 const themeToggle=document.getElementById("themeToggle");
 const volumeSlider=document.getElementById("volumeSlider");
+const noResults=document.getElementById("noResults");
+const downloadAllBtn=document.getElementById("downloadAllBtn");
 
-/* SAFE LOAD SONGS */
+/* LOAD SONGS */
 async function loadSongs(query="Hits"){
   grid.innerHTML="Loading...";
   try{
     const lang=languageSelect.value;
     const res=await fetch(`https://jiosavan-api-with-playlist.vercel.app/api/search/songs?query=${lang} ${query}&limit=20`);
     const data=await res.json();
-    songs=data?.data?.results||[];
+    songs=data?.data?.results?.filter(s=>s.downloadUrl)?.slice(0,20)||[];
+    if(songs.length===0){noResults.style.display="block";grid.innerHTML="";}else{noResults.style.display="none";}
     displaySongs();
-  }catch(err){
-    grid.innerHTML="Failed to load songs.";
-  }
+  }catch(err){grid.innerHTML="Failed to load songs.";}
 }
 
 /* DISPLAY SONGS */
 function displaySongs(){
   grid.innerHTML="";
   songs.forEach((song,i)=>{
-    if(!song.downloadUrl)return;
-
     const div=document.createElement("div");
     div.className="song-card";
+    const url=song.downloadUrl?.slice(-1)[0]?.url||"#";
     div.innerHTML=`
       <img src="${song.image?.[2]?.url||''}">
       <div class="song-title">${song.name}</div>
       <div class="song-artist">${song.artists.primary.map(a=>a.name).join(", ")}</div>
+      <button class="download-btn" onclick="downloadSong('${url}','${song.name}.mp3')">Download</button>
     `;
-    div.onclick=()=>playSong(i);
+    div.onclick=()=>playSong(i,true);
     grid.appendChild(div);
   });
 }
 
-/* SAFE PLAY */
-function playSong(i){
+/* PLAY SONG */
+function playSong(i,scroll=false){
   currentIndex=i;
   const song=songs[i];
   const url=song.downloadUrl?.slice(-1)[0]?.url;
   if(!url)return;
-
   audio.src=url;
   audio.play().catch(()=>{});
   playing=true;
@@ -252,54 +180,58 @@ function playSong(i){
   thumb.src=song.image?.[2]?.url||"";
   title.textContent=song.name;
   artist.textContent=song.artists.primary.map(a=>a.name).join(", ");
+  if(scroll){
+    const card=document.getElementsByClassName("song-card")[i];
+    card.scrollIntoView({behavior:"smooth",block:"center"});
+  }
+}
+
+/* DOWNLOAD SONG */
+function downloadSong(url,filename){
+  if(!url) return;
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=filename;
+  a.click();
+}
+
+/* DOWNLOAD ALL SONGS */
+downloadAllBtn.onclick=()=>{
+  songs.forEach(s=>{
+    const url=s.downloadUrl?.slice(-1)[0]?.url;
+    const name=s.name+".mp3";
+    if(url) downloadSong(url,name);
+  });
 }
 
 /* CONTROLS */
 playBtn.onclick=()=>{
   if(!audio.src)return;
   playing?audio.pause():audio.play();
-  playBtn.innerHTML=playing?
-  '<i class="material-icons">play_arrow</i>':
-  '<i class="material-icons">pause</i>';
+  playBtn.innerHTML=playing?'<i class="material-icons">play_arrow</i>':'<i class="material-icons">pause</i>';
   playing=!playing;
 };
-
-prevBtn.onclick=()=>{if(currentIndex>0)playSong(currentIndex-1)};
-nextBtn.onclick=()=>{if(currentIndex<songs.length-1)playSong(currentIndex+1)};
-audio.onended=()=>{if(currentIndex<songs.length-1)playSong(currentIndex+1)};
-
+prevBtn.onclick=()=>{if(currentIndex>0)playSong(currentIndex-1,true);}
+nextBtn.onclick=()=>{if(currentIndex<songs.length-1)playSong(currentIndex+1,true);}
+audio.onended=()=>{if(currentIndex<songs.length-1)playSong(currentIndex+1,true);}
 audio.ontimeupdate=()=>{
   progressBar.value=(audio.currentTime/audio.duration)*100||0;
   current.textContent=format(audio.currentTime);
   duration.textContent=format(audio.duration);
 };
-progressBar.oninput=()=>{
-  audio.currentTime=(progressBar.value/100)*audio.duration;
-};
-
-/* VOLUME */
-volumeSlider.oninput=()=>{audio.volume=volumeSlider.value};
-
-/* FORMAT */
-function format(t){
-  if(!t)return"0:00";
-  const m=Math.floor(t/60),s=Math.floor(t%60);
-  return m+":"+(s<10?"0"+s:s);
-}
+progressBar.oninput=()=>{audio.currentTime=(progressBar.value/100)*audio.duration;}
+volumeSlider.oninput=()=>{audio.volume=volumeSlider.value;}
+function format(t){if(!t)return"0:00";const m=Math.floor(t/60),s=Math.floor(t%60);return m+":"+(s<10?"0"+s:s);}
 
 /* SEARCH */
 searchBtn.onclick=()=>loadSongs(searchInput.value);
-searchInput.addEventListener("keypress",e=>{
-  if(e.key==="Enter")loadSongs(searchInput.value);
-});
+searchInput.addEventListener("keypress",e=>{if(e.key==="Enter")loadSongs(searchInput.value);});
 
 /* THEME */
 themeToggle.onclick=()=>{
   document.body.classList.toggle("light");
   const light=document.body.classList.contains("light");
-  themeToggle.innerHTML=light?
-  '<i class="material-icons">light_mode</i>':
-  '<i class="material-icons">dark_mode</i>';
+  themeToggle.innerHTML=light?'<i class="material-icons">light_mode</i>':'<i class="material-icons">dark_mode</i>';
 };
 
 loadSongs();
