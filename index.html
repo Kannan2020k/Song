@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tamil Music Player</title>
+<title>Music Player</title>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -14,6 +14,25 @@ body{
   font-family:'Roboto',sans-serif;
   background:#0f0f0f;
   color:#fff;
+  transition:0.3s;
+}
+
+/* LIGHT MODE */
+body.light{
+  background:#f5f5f5;
+  color:#000;
+}
+body.light .header,
+body.light .player{
+  background:#ffffff;
+  border-color:#ddd;
+}
+body.light .search-box{
+  background:#eee;
+}
+body.light .search-btn{
+  background:#ddd;
+  color:#000;
 }
 
 /* HEADER */
@@ -30,35 +49,64 @@ body{
   margin:auto;
   display:flex;
   align-items:center;
-  gap:20px;
+  justify-content:space-between;
+  gap:10px;
 }
-.logo{display:flex;align-items:center;gap:10px;font-size:20px}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+}
 .logo-icon{
   width:32px;height:32px;background:#ff0000;
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
 }
-.search-container{flex:1;max-width:600px}
+
+/* SEARCH + LANGUAGE */
+.search-section{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 .search-box{
   display:flex;
   border:1px solid #303030;
   border-radius:25px;
   overflow:hidden;
+  background:#121212;
 }
 .search-input{
-  flex:1;
-  padding:10px 15px;
+  padding:8px 12px;
   border:none;
-  background:#121212;
-  color:#fff;
+  background:transparent;
+  color:inherit;
   outline:none;
+  width:180px;
 }
 .search-btn{
   background:#303030;
   border:none;
-  padding:10px 15px;
+  padding:8px 12px;
   cursor:pointer;
   color:#fff;
+}
+.language-select{
+  padding:8px;
+  border-radius:20px;
+  border:none;
+  outline:none;
+  cursor:pointer;
+}
+
+/* THEME BUTTON */
+.theme-toggle{
+  cursor:pointer;
+  background:none;
+  border:none;
+  color:inherit;
+  font-size:22px;
 }
 
 /* MAIN */
@@ -73,20 +121,17 @@ body{
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
   gap:15px;
 }
-.song-card{
-  cursor:pointer;
-}
+.song-card{cursor:pointer}
 .song-card img{
   width:100%;
   aspect-ratio:1;
   object-fit:cover;
   border-radius:8px;
 }
-.song-info{padding:5px}
 .song-title{font-size:14px}
-.song-artist{font-size:12px;color:#aaa}
+.song-artist{font-size:12px;color:gray}
 
-/* PLAYER BAR */
+/* PLAYER */
 .player{
   position:fixed;
   bottom:0;
@@ -104,19 +149,11 @@ body{
   align-items:center;
 }
 .player-info{display:flex;gap:10px;align-items:center}
-.player-info img{
-  width:50px;height:50px;border-radius:5px;
-}
-.controls{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-.control-buttons{
-  display:flex;gap:10px;
-}
+.player-info img{width:50px;height:50px;border-radius:5px}
+.controls{display:flex;flex-direction:column;align-items:center}
+.control-buttons{display:flex;gap:10px}
 .control-btn{
-  background:none;border:none;color:#fff;
+  background:none;border:none;color:inherit;
   cursor:pointer;font-size:22px;
 }
 .play-btn{
@@ -126,25 +163,14 @@ body{
   display:flex;align-items:center;justify-content:center;
 }
 .progress{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  width:100%;
+  display:flex;align-items:center;gap:5px;width:100%;
 }
-.progress input{
-  flex:1;
-}
+.progress input{flex:1}
 
 /* MOBILE */
 @media(max-width:768px){
-  .search-container{display:none}
-  .music-grid{
-    grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-  }
-  .player-content{
-    grid-template-columns:1fr;
-    gap:10px;
-  }
+  .header-content{flex-direction:column;align-items:flex-start}
+  .player-content{grid-template-columns:1fr;gap:10px}
 }
 </style>
 </head>
@@ -157,15 +183,33 @@ body{
       <div class="logo-icon">
         <i class="material-icons">music_note</i>
       </div>
-      Tamil Music
+      Music Player
     </div>
-    <div class="search-container">
+
+    <div class="search-section">
+
+      <!-- LANGUAGE SELECT -->
+      <select id="languageSelect" class="language-select">
+        <option value="Tamil">Tamil</option>
+        <option value="Hindi">Hindi</option>
+        <option value="English">English</option>
+        <option value="Telugu">Telugu</option>
+        <option value="Malayalam">Malayalam</option>
+      </select>
+
+      <!-- SEARCH -->
       <div class="search-box">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search Tamil songs">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search songs">
         <button class="search-btn" id="searchBtn">
           <i class="material-icons">search</i>
         </button>
       </div>
+
+      <!-- DARK/LIGHT TOGGLE -->
+      <button class="theme-toggle" id="themeToggle">
+        <i class="material-icons">dark_mode</i>
+      </button>
+
     </div>
   </div>
 </div>
@@ -180,7 +224,7 @@ body{
       <img id="thumb" src="">
       <div>
         <div id="title">Select a song</div>
-        <div id="artist" style="color:#aaa;font-size:12px">---</div>
+        <div id="artist" style="font-size:12px;color:gray">---</div>
       </div>
     </div>
 
@@ -196,86 +240,115 @@ body{
         <span id="duration">0:00</span>
       </div>
     </div>
-
     <div></div>
   </div>
 </div>
 
 <script>
-const api = "https://jiosavan-api-with-playlist.vercel.app/api/search/songs?query=Tamil Hits&limit=20";
-const audio = new Audio();
-let songs = [];
-let currentIndex = -1;
-let playing = false;
+const audio=new Audio();
+let songs=[],currentIndex=-1,playing=false;
 
-const grid = document.getElementById("musicGrid");
-const playBtn = document.getElementById("play");
-const prevBtn = document.getElementById("prev");
-const nextBtn = document.getElementById("next");
-const thumb = document.getElementById("thumb");
-const title = document.getElementById("title");
-const artist = document.getElementById("artist");
-const progressBar = document.getElementById("progressBar");
-const current = document.getElementById("current");
-const duration = document.getElementById("duration");
+const grid=document.getElementById("musicGrid");
+const playBtn=document.getElementById("play");
+const prevBtn=document.getElementById("prev");
+const nextBtn=document.getElementById("next");
+const thumb=document.getElementById("thumb");
+const title=document.getElementById("title");
+const artist=document.getElementById("artist");
+const progressBar=document.getElementById("progressBar");
+const current=document.getElementById("current");
+const duration=document.getElementById("duration");
+const searchInput=document.getElementById("searchInput");
+const searchBtn=document.getElementById("searchBtn");
+const languageSelect=document.getElementById("languageSelect");
+const themeToggle=document.getElementById("themeToggle");
 
-async function loadSongs(){
-  const res = await fetch(api);
-  const data = await res.json();
-  songs = data.data.results;
+/* LOAD SONGS */
+async function loadSongs(query="Tamil Hits"){
+  grid.innerHTML="";
+  const lang=languageSelect.value;
+  const res=await fetch(`https://jiosavan-api-with-playlist.vercel.app/api/search/songs?query=${lang} ${query}&limit=20`);
+  const data=await res.json();
+  songs=data.data.results;
+
   songs.forEach((song,i)=>{
-    if(!song.downloadUrl) return;
-    const div = document.createElement("div");
+    const image=song.image?.[2]?.url||"";
+    const div=document.createElement("div");
     div.className="song-card";
     div.innerHTML=`
-      <img src="${song.image[2].url}">
-      <div class="song-info">
-        <div class="song-title">${song.name}</div>
-        <div class="song-artist">${song.artists.primary.map(a=>a.name).join(", ")}</div>
-      </div>
+      <img src="${image}">
+      <div class="song-title">${song.name}</div>
+      <div class="song-artist">${song.artists.primary.map(a=>a.name).join(", ")}</div>
     `;
     div.onclick=()=>playSong(i);
     grid.appendChild(div);
   });
 }
 
+/* PLAY SONG */
 function playSong(i){
   currentIndex=i;
   const song=songs[i];
-  audio.src=song.downloadUrl[4].url;
+  const audioUrl=song.downloadUrl?.slice(-1)[0]?.url;
+  if(!audioUrl)return;
+  audio.src=audioUrl;
   audio.play();
   playing=true;
   playBtn.innerHTML='<i class="material-icons">pause</i>';
-  thumb.src=song.image[2].url;
+  thumb.src=song.image?.[2]?.url||"";
   title.textContent=song.name;
   artist.textContent=song.artists.primary.map(a=>a.name).join(", ");
 }
 
+/* CONTROLS */
 playBtn.onclick=()=>{
-  if(!audio.src) return;
-  if(playing){audio.pause();playBtn.innerHTML='<i class="material-icons">play_arrow</i>';}
-  else{audio.play();playBtn.innerHTML='<i class="material-icons">pause</i>';}
+  if(!audio.src)return;
+  playing?audio.pause():audio.play();
+  playBtn.innerHTML=playing?
+  '<i class="material-icons">play_arrow</i>':
+  '<i class="material-icons">pause</i>';
   playing=!playing;
-}
+};
 
-prevBtn.onclick=()=>{if(currentIndex>0)playSong(currentIndex-1)}
-nextBtn.onclick=()=>{if(currentIndex<songs.length-1)playSong(currentIndex+1)}
+prevBtn.onclick=()=>{if(currentIndex>0)playSong(currentIndex-1)};
+nextBtn.onclick=()=>{if(currentIndex<songs.length-1)playSong(currentIndex+1)};
+audio.onended=()=>{if(currentIndex<songs.length-1)playSong(currentIndex+1)};
 
 audio.ontimeupdate=()=>{
   progressBar.value=(audio.currentTime/audio.duration)*100||0;
   current.textContent=format(audio.currentTime);
   duration.textContent=format(audio.duration);
-}
-
+};
 progressBar.oninput=()=>{
   audio.currentTime=(progressBar.value/100)*audio.duration;
-}
+};
 
 function format(t){
-  if(!t) return "0:00";
-  const m=Math.floor(t/60);
-  const s=Math.floor(t%60);
+  if(!t)return"0:00";
+  const m=Math.floor(t/60),s=Math.floor(t%60);
   return m+":"+(s<10?"0"+s:s);
+}
+
+/* SEARCH */
+searchBtn.onclick=()=>loadSongs(searchInput.value);
+searchInput.addEventListener("keypress",e=>{
+  if(e.key==="Enter")loadSongs(searchInput.value);
+});
+
+/* THEME TOGGLE */
+themeToggle.onclick=()=>{
+  document.body.classList.toggle("light");
+  const isLight=document.body.classList.contains("light");
+  themeToggle.innerHTML=isLight?
+    '<i class="material-icons">light_mode</i>':
+    '<i class="material-icons">dark_mode</i>';
+  localStorage.setItem("theme",isLight?"light":"dark");
+};
+
+/* LOAD SAVED THEME */
+if(localStorage.getItem("theme")==="light"){
+  document.body.classList.add("light");
+  themeToggle.innerHTML='<i class="material-icons">light_mode</i>';
 }
 
 loadSongs();
